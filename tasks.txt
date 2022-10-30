@@ -1,0 +1,5 @@
+- create folder structure                   done
+- install initial dependencies              done
+- handle Navigation
+- config fonts
+- UI 
