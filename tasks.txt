@@ -1,5 +1,19 @@
-- create folder structure                   done
-- install initial dependencies              done
+TODO LIST
 - handle Navigation
 - config fonts
 - UI 
+
+
+
+
+Current
+- app icon & fonts
+
+
+
+
+
+
+FINISHED
+- create folder structure                   
+- install initial dependencies              
