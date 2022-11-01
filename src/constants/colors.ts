@@ -1,4 +1,4 @@
-export const COLORS = {
+const COLORS = {
     white: '#fff',
     black: '#000',
     primary: '#FD4556',
@@ -9,3 +9,5 @@ export const COLORS = {
     darknavy: '#0F1923',
     lightnavy: '#1E2F41',
 };
+
+export default COLORS;
