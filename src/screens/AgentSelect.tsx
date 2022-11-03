@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import Colors from '../constants/colors';
+import Colors from '../utils/Colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Container from '../components/container-with-background-overlay';
 import BackgroundGradient from '../components/background-gradient';
