@@ -1,17 +1,24 @@
+// React
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import Colors from '../utils/Colors';
+// Libraries
 import { SafeAreaView } from 'react-native-safe-area-context';
+// Utils
+import Colors from '../utils/Colors';
 import Container from '../components/container-with-background-overlay';
+import { moderateScale, verticalScale } from '../utils/Scale';
+// Components
 import BackgroundGradient from '../components/background-gradient';
+
 const AgentSelect = () => {
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.main}>
+            {/* Gradient */}
             <BackgroundGradient />
-            <Container>
-                <View>
-                    <Text style={{ fontSize: 32, color: 'white' }}>sakldashdkasdashdlaksjas</Text>
-                </View>
+            {/* Container with Background overlay */}
+            <Container style={styles.containerStyle}>
+                {/* Label */}
+                <Text style={styles.labelStyle}>select your agent</Text>
             </Container>
         </SafeAreaView>
     );
@@ -20,14 +27,21 @@ const AgentSelect = () => {
 export default AgentSelect;
 
 const styles = StyleSheet.create({
-    container: {
+    main: {
         backgroundColor: Colors.darknavy,
-        flex: 1,
-        alignContent: 'center',
     },
-    gradient: {
-        width: '100%',
-        height: '35%',
-        position: 'absolute',
+    containerStyle: {
+        flex: 1,
+        paddingHorizontal: moderateScale(16),
+    },
+    labelStyle: {
+        color: Colors.white,
+        fontSize: moderateScale(38),
+        fontFamily: 'Tungsten',
+        textTransform: 'uppercase',
+        marginTop: verticalScale(32),
+        textShadowOffset: { width: 0, height: 4 },
+        textShadowRadius: 2,
+        textShadowColor: Colors.black,
     },
 });
