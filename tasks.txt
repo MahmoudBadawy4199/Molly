@@ -7,8 +7,7 @@ TODO LIST
 
 
 Current
-- app icon & fonts
-
+- create ui components
 
 
 
@@ -16,4 +15,5 @@ Current
 
 FINISHED
 - create folder structure                   
-- install initial dependencies              
+- install initial dependencies
+- app icon & fonts & colors
