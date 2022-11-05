@@ -3,6 +3,7 @@ import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 // Libraries
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 // Utils
 import Colors from '../utils/Colors';
 import Container from '../components/container-with-background-overlay';
@@ -11,8 +12,13 @@ import { moderateScale, verticalScale } from '../utils/Scale';
 import BackgroundGradient from '../components/background-gradient';
 import Agent from '../components/agent';
 import images from '../../assets/images/mock';
+import { AgentScreenNavigationProp } from '../navigation/HomeStackNavigator';
 
 const AgentSelect = () => {
+    const navigation = useNavigation<AgentScreenNavigationProp>();
+    function navigationHandler() {
+        navigation.navigate('MapSelect');
+    }
     return (
         <SafeAreaView style={styles.main}>
             {/* Gradient */}
@@ -35,6 +41,7 @@ const AgentSelect = () => {
                         modelImage={images.brim}
                         nameImage={images.brimName}
                         roleImage={images.role}
+                        onPress={navigationHandler}
                     />
                     <Agent
                         gradientColors={[
@@ -48,6 +55,7 @@ const AgentSelect = () => {
                         modelImage={images.viper}
                         nameImage={images.viperName}
                         roleImage={images.role}
+                        onPress={navigationHandler}
                     />
                 </View>
             </Container>

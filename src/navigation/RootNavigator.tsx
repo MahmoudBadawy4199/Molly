@@ -7,7 +7,7 @@ export type RootStackParamList = {
     Main: undefined;
 };
 
-const RootStack = createStackNavigator();
+const RootStack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
     return (

@@ -1,6 +1,6 @@
 // React
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
 // Libraries
 import { LinearGradient } from 'expo-linear-gradient';
 // Utils
@@ -12,14 +12,16 @@ type AgentProp = {
     modelImage: number;
     nameImage: number;
     roleImage: number;
+    onPress: () => void;
 };
 
-const Agent = ({ gradientColors, shadowColor, modelImage, nameImage, roleImage }: AgentProp) => {
+const Agent = (props: AgentProp) => {
+    const shadowColor = props.shadowColor;
     return (
-        <View style={[styles.container, { shadowColor }]}>
+        <TouchableOpacity onPress={props.onPress} style={[styles.container, { shadowColor }]}>
             {/* Background Gradient */}
             <LinearGradient
-                colors={gradientColors}
+                colors={props.gradientColors}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 0 }}
                 locations={[0, 0.25, 0.5, 0.75, 1]}
@@ -30,14 +32,14 @@ const Agent = ({ gradientColors, shadowColor, modelImage, nameImage, roleImage }
             <View style={styles.blackOverlay} />
 
             {/* Role */}
-            <Image style={styles.roleStyle} source={roleImage} />
+            <Image style={styles.roleStyle} source={props.roleImage} />
 
             {/* Name */}
-            <Image style={styles.nameStyle} source={nameImage} />
+            <Image style={styles.nameStyle} source={props.nameImage} />
 
             {/* Model */}
-            <Image style={styles.modelStyle} source={modelImage} />
-        </View>
+            <Image style={styles.modelStyle} source={props.modelImage} />
+        </TouchableOpacity>
     );
 };
 
