@@ -6,13 +6,14 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 // Utils
 import Colors from '../utils/Colors';
-import Container from '../components/container-with-background-overlay';
 import { moderateScale, verticalScale } from '../utils/Scale';
 // Components
+import Container from '../components/container-with-background-overlay';
 import BackgroundGradient from '../components/background-gradient';
 import Agent from '../components/agent';
 import images from '../../assets/images/mock';
-import { AgentScreenNavigationProp } from '../navigation/HomeStackNavigator';
+// Types
+import { AgentScreenNavigationProp } from '../types';
 
 const AgentSelect = () => {
     const navigation = useNavigation<AgentScreenNavigationProp>();

@@ -1,16 +1,9 @@
 import React from 'react';
-import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { AgentSelect, MapSelect, LineupSelect, LineupDetails } from '../screens';
-
-export type HomeStackParamList = {
-    AgentSelect: undefined;
-    MapSelect: undefined;
-    LineupSelect: undefined;
-    LineupDetails: undefined;
-};
+import { HomeStackParamList } from '../types';
 
 const HomeStack = createStackNavigator<HomeStackParamList>();
-export type AgentScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AgentSelect'>;
 
 const HomeStackNavigator = () => {
     return (
