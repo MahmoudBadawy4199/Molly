@@ -7,7 +7,7 @@ import { Favourites, About } from '../screens';
 import HomeStackNavigator from './HomeStackNavigator';
 
 // Utils
-import { horizontalScale } from '../utils/Scale';
+import { horizontalScale, moderateScale } from '../utils/Scale';
 import Colors from '../utils/Colors';
 
 // Libraries
@@ -54,7 +54,7 @@ const CustomTabButtonWithBottomLine = (props: BottomTabBarButtonProps) => (
 );
 
 function generateIcons(route: TabRouteProp, color: string, focused: boolean) {
-    const ICON_SIZE = 24;
+    const ICON_SIZE = moderateScale(24);
     let iconName: React.ComponentProps<typeof Ionicons>['name'] | undefined;
 
     switch (route.name) {
