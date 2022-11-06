@@ -1,12 +1,14 @@
+// React
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+// Components
 import TabNavigator from './TabNavigator';
+// Libraries
+import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+// Types
+import { RootStackParamList } from '../types';
 
-export type RootStackParamList = {
-    Main: undefined;
-};
-
+// Navigator
 const RootStack = createStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {

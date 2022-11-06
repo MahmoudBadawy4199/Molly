@@ -1,6 +1,11 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
+// Root Navigator Types
+export type RootStackParamList = {
+    Main: undefined;
+};
+
 // Tab Navigator Types
 export type TabNavigatorParamList = {
     Favourites: undefined;

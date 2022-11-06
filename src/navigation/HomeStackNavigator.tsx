@@ -1,8 +1,13 @@
+// React
 import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
+// Components
 import { AgentSelect, MapSelect, LineupSelect, LineupDetails } from '../screens';
+// Libraries
+import { createStackNavigator } from '@react-navigation/stack';
+// Types
 import { HomeStackParamList } from '../types';
 
+// Navigator
 const HomeStack = createStackNavigator<HomeStackParamList>();
 
 const HomeStackNavigator = () => {
