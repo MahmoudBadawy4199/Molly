@@ -23,7 +23,7 @@ const AgentSelect = () => {
     return (
         <SafeAreaView style={styles.main}>
             {/* Gradient */}
-            <BackgroundGradient />
+            <BackgroundGradient style={styles.backgroundGradientStyle} />
             {/* Container with Background overlay */}
             <Container style={styles.containerStyle}>
                 {/* Label */}
@@ -73,6 +73,11 @@ const styles = StyleSheet.create({
     containerStyle: {
         flex: 1,
         paddingHorizontal: moderateScale(16),
+    },
+    backgroundGradientStyle: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
     },
     labelStyle: {
         color: Colors.white,

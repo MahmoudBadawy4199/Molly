@@ -1,8 +1,12 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import React from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const BackgroundGradient = () => {
+type BackgroundGradientProps = {
+    style?: StyleProp<ViewStyle> | undefined;
+};
+
+const BackgroundGradient = ({ style }: BackgroundGradientProps) => {
     return (
         <>
             <LinearGradient
@@ -16,18 +20,10 @@ const BackgroundGradient = () => {
                 start={{ x: 0.5, y: 0 }}
                 end={{ x: 0.5, y: 1 }}
                 locations={[0, 0.3, 0.6, 0.9]}
-                style={styles.size}
+                style={style}
             />
         </>
     );
 };
 
 export default BackgroundGradient;
-
-const styles = StyleSheet.create({
-    size: {
-        width: '100%',
-        height: '100%',
-        position: 'absolute',
-    },
-});
