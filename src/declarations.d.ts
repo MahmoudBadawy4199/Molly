@@ -4,4 +4,7 @@ declare module 'react-native-svg' {
         xmlns?: string;
         xmlnsXlink?: string;
     }
+    export interface MaskProps {
+        children?: React.ReactNode;
+    }
 }

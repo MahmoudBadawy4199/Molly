@@ -4,10 +4,10 @@
         "slug": "Molly",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./assets/images/expo/icon.png",
+        "icon": "./src/assets/images/expo/icon.png",
         "userInterfaceStyle": "dark",
         "splash": {
-            "image": "./assets/images/expo/splash.png",
+            "image": "./src/assets/images/expo/splash.png",
             "resizeMode": "contain",
             "backgroundColor": "#0F1923"
         },
@@ -20,12 +20,12 @@
         },
         "android": {
             "adaptiveIcon": {
-                "foregroundImage": "./assets/images/expo/adaptive-icon.png",
+                "foregroundImage": "./src/assets/images/expo/adaptive-icon.png",
                 "backgroundColor": "#0F1923"
             }
         },
         "web": {
-            "favicon": "./assets/images/expo/favicon.png"
+            "favicon": "./src/assets/images/expo/favicon.png"
         }
     }
 }

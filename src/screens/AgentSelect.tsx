@@ -7,13 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 // Utils
 import Colors from '../utils/Colors';
 import { moderateScale, verticalScale } from '../utils/Scale';
-import images from '../../assets/images';
 // Components
 import Container from '../components/container-with-background-overlay';
 import BackgroundGradient from '../components/background-gradient';
 import Agent from '../components/agent';
 // Types
 import { AgentScreenNavigationProp } from '../types';
+import images from '../assets/images';
 
 const AgentSelect = () => {
     const navigation = useNavigation<AgentScreenNavigationProp>();

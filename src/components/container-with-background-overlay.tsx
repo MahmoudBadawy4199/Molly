@@ -1,5 +1,6 @@
 import { StyleSheet, View, ImageBackground, StyleProp, ViewStyle } from 'react-native';
 import React from 'react';
+import images from '../assets/images';
 
 type ContainerProps = {
     children?: React.ReactNode;
@@ -8,10 +9,7 @@ type ContainerProps = {
 
 const Container: React.FC<ContainerProps> = ({ children, style }) => {
     return (
-        <ImageBackground
-            source={require('../../assets/images/app/bg-overlay.png')}
-            style={styles.backgroundOverlay}
-        >
+        <ImageBackground source={images.backgroundOverlay} style={styles.backgroundOverlay}>
             <View style={style}>{children}</View>
         </ImageBackground>
     );
