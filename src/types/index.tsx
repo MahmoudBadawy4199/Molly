@@ -1,5 +1,8 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { StyleProp, ViewStyle } from 'react-native';
+
+////////////////////////////// { NAVIGATION } //////////////////////////////
 
 // Root Navigator Types
 export type RootStackParamList = {
@@ -23,3 +26,14 @@ export type HomeStackParamList = {
 };
 export type AgentScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AgentSelect'>;
 export type MapSelectScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'MapSelect'>;
+
+////////////////////////////// { SCREENS } //////////////////////////////
+
+////////////////////////////// { COMPONENTS } //////////////////////////////
+// Map-Item Component
+export type MapItemProps = {
+    mapName: string;
+    mapImage: number | undefined;
+    style?: StyleProp<ViewStyle> | undefined;
+    onPress: () => void;
+};
