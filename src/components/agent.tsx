@@ -102,11 +102,10 @@ const styles = StyleSheet.create({
     modelStyle: {
         height: verticalScale(120),
         width: horizontalScale(120),
-        resizeMode: 'contain',
+        resizeMode: 'stretch',
         position: 'absolute',
         right: 0,
         bottom: 0,
-        top: verticalScale(-15),
         borderBottomRightRadius: moderateScale(10),
     },
 });

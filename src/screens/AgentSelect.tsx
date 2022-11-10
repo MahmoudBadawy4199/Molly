@@ -13,6 +13,7 @@ import BackgroundGradient from '../components/background-gradient';
 import Agent from '../components/agent';
 // Types
 import { AgentScreenNavigationProp } from '../types';
+// Assets
 import images from '../assets/images';
 
 const AgentSelect = () => {
