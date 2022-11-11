@@ -88,7 +88,11 @@ const MapSelect = () => {
             <Container style={styles.containerStyle}>
                 {/* Banner */}
                 <View style={styles.bannerStyle}>
-                    <Banner />
+                    <Banner
+                        screenTitle="choose map"
+                        backgroundImage={images.mapSelectBackground}
+                        agentImage={images.viperMap}
+                    />
                 </View>
                 {/* Body  */}
                 <View style={styles.bodyStyle}>

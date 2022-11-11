@@ -1,7 +1,7 @@
 const images = {
     // app
     backgroundOverlay: require('./app/bg-overlay.png'),
-    mapSelectBackground: require('./app/map-select-background.jpg'),
+    mapSelectBackground: require('./app/map-select-background.webp'),
     // mock
     brim: require('./mock/brimstone-img2.png'),
     viper: require('./mock/viper-img.png'),
@@ -10,7 +10,7 @@ const images = {
     role: require('./mock/role-icon.png'),
     brimMap: require('./mock/brim-map.png'),
     viperMap: require('./mock/viper-map.png'),
-    ascent: require('./mock/ascent.png'),
+    ascent: require('./mock/ascent.webp'),
 };
 
 export default images;
