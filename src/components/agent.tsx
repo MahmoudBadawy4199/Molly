@@ -1,8 +1,8 @@
 // React
 import React from 'react';
 import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
-// Libraries
-import { LinearGradient } from 'expo-linear-gradient';
+// Components
+import BackgroundGradient from './background-gradient';
 // Utils
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 
@@ -20,12 +20,12 @@ const Agent = (props: AgentProp) => {
     return (
         <TouchableOpacity onPress={props.onPress} style={[styles.container, { shadowColor }]}>
             {/* Background Gradient */}
-            <LinearGradient
-                colors={props.gradientColors}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
+            <BackgroundGradient
+                gradientColors={props.gradientColors}
                 locations={[0, 0.25, 0.5, 0.75, 1]}
                 style={styles.gradientStyle}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 0 }}
             />
 
             {/* Black Overlay on Gradient */}
