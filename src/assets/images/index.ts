@@ -11,6 +11,8 @@ const images = {
     brimMap: require('./mock/brim-map.png'),
     viperMap: require('./mock/viper-map.png'),
     ascent: require('./mock/ascent.webp'),
+    minimap: require('./mock/minimap.png'),
+    lineupMap: require('./mock/lineup-map.png'),
 };
 
 export default images;
