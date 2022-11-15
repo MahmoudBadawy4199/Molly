@@ -26,6 +26,10 @@ export type HomeStackParamList = {
 };
 export type AgentScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AgentSelect'>;
 export type MapSelectScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'MapSelect'>;
+export type LineupSelectScreenNavigationProp = StackNavigationProp<
+    HomeStackParamList,
+    'LineupSelect'
+>;
 
 ////////////////////////////// { SCREENS } //////////////////////////////
 
