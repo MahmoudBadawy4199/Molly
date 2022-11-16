@@ -13,6 +13,10 @@ const images = {
     ascent: require('./mock/ascent.webp'),
     minimap: require('./mock/minimap.png'),
     lineupMap: require('./mock/lineup-map.png'),
+    lineup: require('./mock/lineup.png'),
+    position: require('./mock/position.png'),
+    result: require('./mock/result.png'),
+    spike: require('./mock/spike.png'),
 };
 
 export default images;
