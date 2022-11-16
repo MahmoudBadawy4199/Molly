@@ -5,13 +5,14 @@ import { ScrollView, Platform, StyleSheet, Image, Text, View } from 'react-nativ
 import Container from '../components/container-with-background-overlay';
 import BackgroundGradient from '../components/background-gradient';
 import LineupDetailsSection from '../components/lineup-details-section';
+// Libraries
+import YoutubeIframe from 'react-native-youtube-iframe';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 // Assets
 import images from '../assets/images';
 import { ShapeColorOverlay } from '../assets/svg';
-import YoutubeIframe from 'react-native-youtube-iframe';
 
 const LineupDetails = () => {
     return (
