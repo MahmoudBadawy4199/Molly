@@ -5,6 +5,7 @@ import { ScrollView, Platform, StyleSheet, Image, Text, View } from 'react-nativ
 import Container from '../components/container-with-background-overlay';
 import BackgroundGradient from '../components/background-gradient';
 import LineupDetailsSection from '../components/lineup-details-section';
+import FavouritesButton from '../components/favourites-button';
 // Libraries
 import YoutubeIframe from 'react-native-youtube-iframe';
 // Utils
@@ -34,6 +35,8 @@ const LineupDetails = () => {
                     <View style={styles.labelContainerStyle}>
                         <Text style={styles.labelStyle}>{`setup #1`}</Text>
                         <Text style={styles.labelStyle}>Dish</Text>
+                        {/* Add to Favourites Button */}
+                        <FavouritesButton />
                     </View>
                 </View>
                 {/* Body  */}
@@ -125,7 +128,7 @@ const styles = StyleSheet.create({
         left: 0,
     },
     labelContainerStyle: {
-        width: '100%',
+        width: '50%',
         height: '100%',
         position: 'absolute',
         bottom: 0,
