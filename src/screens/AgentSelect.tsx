@@ -2,7 +2,6 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
 // Libraries
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 // Utils
 import Colors from '../utils/Colors';
@@ -22,7 +21,7 @@ const AgentSelect = () => {
         navigation.navigate('MapSelect');
     }
     return (
-        <SafeAreaView style={styles.main}>
+        <View style={styles.main}>
             {/* Gradient */}
             <BackgroundGradient style={styles.backgroundGradientStyle} />
             {/* Container with Background overlay */}
@@ -61,7 +60,7 @@ const AgentSelect = () => {
                     />
                 </View>
             </Container>
-        </SafeAreaView>
+        </View>
     );
 };
 
@@ -70,6 +69,7 @@ export default AgentSelect;
 const styles = StyleSheet.create({
     main: {
         backgroundColor: Colors.darknavy,
+        flex: 1,
     },
     containerStyle: {
         flex: 1,
