@@ -1,6 +1,6 @@
 // React
 import React from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TouchableWithoutFeedback, LayoutAnimation } from 'react-native';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
@@ -8,49 +8,67 @@ import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 import { Ionicons } from '@expo/vector-icons';
 
 const FavouritesButton = () => {
-    const [isFavourite, setIsFavourite] = React.useState<Boolean>(false);
-
-    // If not Favourite
-    if (isFavourite) {
-        return (
-            <TouchableWithoutFeedback onPress={() => setIsFavourite(!isFavourite)}>
-                <View style={styles.containerStyle}>
-                    {/* Button Text */}
-                    <Text style={styles.textStyle}>Add To Favourites</Text>
-                    {/* Button Icon */}
-                    <View style={styles.iconStyleContainer}>
-                        <Ionicons name="heart" size={moderateScale(24)} color={Colors.white} />
-                    </View>
-                </View>
-            </TouchableWithoutFeedback>
-        );
-    } else {
-        //  If Favourite
-        return (
-            <TouchableWithoutFeedback onPress={() => setIsFavourite(!isFavourite)}>
+    const [isNotFavourite, setIsNotFavourite] = React.useState<Boolean>(true);
+    const toggleFavourite = () => {
+        const layoutAnimationConfig = {
+            duration: 300,
+            update: {
+                type: LayoutAnimation.Types.easeInEaseOut,
+            },
+            delete: {
+                duration: 100,
+                type: LayoutAnimation.Types.easeInEaseOut,
+                property: LayoutAnimation.Properties.opacity,
+            },
+        };
+        // animate the Layout Change When the DropDown Appears or Hide
+        LayoutAnimation.configureNext(layoutAnimationConfig);
+        // Change the State for On / Off
+        setIsNotFavourite(!isNotFavourite);
+    };
+    return (
+        <TouchableWithoutFeedback onPress={() => toggleFavourite()}>
+            <View
+                style={[
+                    styles.containerStyle,
+                    isNotFavourite ? styles.containerStyle : styles.containerStyle_active,
+                ]}
+            >
+                {/* Button Text */}
+                {isNotFavourite ? <Text style={styles.textStyle}>Add To Favourites</Text> : null}
+                {/* Button Icon */}
                 <View
                     style={[
-                        styles.containerStyle,
-                        { width: horizontalScale(50), backgroundColor: Colors.primary },
+                        styles.iconStyleContainer,
+                        styles[isNotFavourite ? 'iconStyleContainer' : 'iconStyleContainer_active'],
                     ]}
                 >
-                    {/* Button Icon */}
-                    <View style={styles.iconStyleContainer_active}>
-                        <Ionicons name="heart" size={moderateScale(24)} color={Colors.white} />
-                    </View>
+                    <Ionicons name="heart" size={moderateScale(24)} color={Colors.white} />
                 </View>
-            </TouchableWithoutFeedback>
-        );
-    }
+            </View>
+        </TouchableWithoutFeedback>
+    );
 };
 
 export default FavouritesButton;
 
 const styles = StyleSheet.create({
     containerStyle: {
+        width: '100%',
         height: verticalScale(40),
         paddingHorizontal: horizontalScale(5),
         backgroundColor: Colors.grey,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: moderateScale(5),
+        marginTop: verticalScale(15),
+    },
+    containerStyle_active: {
+        width: horizontalScale(50),
+        height: verticalScale(40),
+        paddingHorizontal: horizontalScale(5),
+        backgroundColor: Colors.primary,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',

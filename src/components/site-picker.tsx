@@ -32,14 +32,13 @@ const SitePicker = ({ style, siteLetter, siteImage }: SitePickerProps) => {
 
     // Show or Hide the DropDown List
     const toggleDropDown = () => {
-        // Animation Config
-        const config = {
+        const arrowAnimationConfig = {
             duration: 300,
             toValue: isDropped ? 0 : 1,
             useNativeDriver: true,
         };
         // Arrow Icon Animation Start
-        Animated.timing(animationController, config).start();
+        Animated.timing(animationController, arrowAnimationConfig).start();
         // animate the Layout Change When the DropDown Appears or Hide
         LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
         // Change the State for On / Off
