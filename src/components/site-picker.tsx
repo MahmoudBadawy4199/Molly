@@ -8,6 +8,8 @@ import {
     Image,
     ViewStyle,
     TouchableWithoutFeedback,
+    Animated,
+    LayoutAnimation,
 } from 'react-native';
 // Components
 import BackgroundGradient from './background-gradient';
@@ -26,9 +28,33 @@ type SitePickerProps = {
 
 const SitePicker = ({ style, siteLetter, siteImage }: SitePickerProps) => {
     const [isDropped, setIsDropped] = React.useState<Boolean>(false);
+    const animationController = React.useRef(new Animated.Value(0)).current;
+
+    // Show or Hide the DropDown List
+    const toggleDropDown = () => {
+        // Animation Config
+        const config = {
+            duration: 300,
+            toValue: isDropped ? 0 : 1,
+            useNativeDriver: true,
+        };
+        // Arrow Icon Animation Start
+        Animated.timing(animationController, config).start();
+        // animate the Layout Change When the DropDown Appears or Hide
+        LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+        // Change the State for On / Off
+        setIsDropped(!isDropped);
+    };
+
+    // Arrow Icon Animation
+    const arrowTransform = animationController.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0deg', '90deg'],
+    });
+
     return (
         <>
-            <TouchableWithoutFeedback onPress={() => setIsDropped(!isDropped)}>
+            <TouchableWithoutFeedback onPress={() => toggleDropDown()}>
                 {/* Site Letter Item */}
                 <View style={[styles.containerStyle, style]}>
                     {/* Background Gradient Color */}
@@ -45,12 +71,9 @@ const SitePicker = ({ style, siteLetter, siteImage }: SitePickerProps) => {
                     </View>
                     {/* Arrow Icon */}
                     <View style={styles.arrowIconContainerStyle}>
-                        <Ionicons
-                            name="md-arrow-forward"
-                            size={24}
-                            color="white"
-                            style={styles.arrowIconStyle}
-                        />
+                        <Animated.View style={{ transform: [{ rotateZ: arrowTransform }] }}>
+                            <Ionicons name="md-arrow-forward" size={24} color="white" />
+                        </Animated.View>
                     </View>
                     {/* Site Minimap Image */}
                     <View style={styles.siteMinimapImageContainerStyle}>
@@ -122,8 +145,6 @@ const styles = StyleSheet.create({
         flex: 3,
         justifyContent: 'center',
         alignItems: 'flex-end',
-    },
-    arrowIconStyle: {
         paddingRight: horizontalScale(15),
     },
     siteMinimapImageContainerStyle: {
