@@ -24,6 +24,18 @@ export type HomeStackParamList = {
     LineupSelect: undefined;
     LineupDetails: undefined;
 };
+
+// Favourites Stack Types
+export type FavouritesStackParamList = {
+    Favourites: undefined;
+    MapSelect: undefined;
+    LineupSelect: undefined;
+    LineupDetails: undefined;
+};
+export type FavouritesScreenNavigationProp = StackNavigationProp<
+    FavouritesStackParamList,
+    'Favourites'
+>;
 export type AgentScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AgentSelect'>;
 export type MapSelectScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'MapSelect'>;
 export type LineupSelectScreenNavigationProp = StackNavigationProp<

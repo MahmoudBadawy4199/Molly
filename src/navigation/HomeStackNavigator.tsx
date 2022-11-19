@@ -16,7 +16,6 @@ const HomeStackNavigator = () => {
             initialRouteName="AgentSelect"
             screenOptions={{
                 headerShown: false,
-                // presentation: 'modal',
             }}
         >
             <HomeStack.Screen name="AgentSelect" component={AgentSelect} />

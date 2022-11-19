@@ -3,7 +3,7 @@ import React from 'react';
 import { StyleSheet, View, Text, Pressable } from 'react-native';
 
 // Components
-import { Favourites, About } from '../screens';
+import { About } from '../screens';
 import HomeStackNavigator from './HomeStackNavigator';
 
 // Utils
@@ -16,13 +16,14 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Types
 import { TabNavigatorParamList, TabRouteProp } from '../types';
+import FavouritesStackNavigator from './FavouritesStackNavigator';
 
 // navigator
 const BottomTabNavigator = createBottomTabNavigator<TabNavigatorParamList>();
 const TabNavigator = () => {
     return (
         <BottomTabNavigator.Navigator
-            initialRouteName="Home"
+            initialRouteName="Favourites"
             screenOptions={({ route }) => ({
                 headerShown: false,
                 // Tab Bar Styling
@@ -37,7 +38,7 @@ const TabNavigator = () => {
                 tabBarButton: CustomTabButtonWithBottomLine,
             })}
         >
-            <BottomTabNavigator.Screen name="Favourites" component={Favourites} />
+            <BottomTabNavigator.Screen name="Favourites" component={FavouritesStackNavigator} />
             <BottomTabNavigator.Screen name="Home" component={HomeStackNavigator} />
             <BottomTabNavigator.Screen name="About" component={About} />
         </BottomTabNavigator.Navigator>
