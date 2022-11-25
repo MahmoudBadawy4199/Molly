@@ -1,78 +1,127 @@
 // React
 import React from 'react';
-import { ImageBackground, StyleProp, StyleSheet, Text, Image, View, ViewStyle } from 'react-native';
+import { ImageBackground, StyleSheet, Text, ActivityIndicator, View, Image } from 'react-native';
 // Utils
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 import Colors from '../utils/Colors';
 // Assets
 import { ShapeOverlay } from '../assets/svg';
+import images from '../assets/images';
 
 type BannerProps = {
-    style?: StyleProp<ViewStyle> | undefined;
     screenTitle: string;
     screenSubtitle?: string;
-    agentImage?: number;
-    backgroundImage: number;
+    modelImage?: string;
+    backgroundImageUri?: string;
+    backgroundImageBlurRadius?: number;
+    defaultBackgroundImage?: 'Select Agent' | 'Select Map';
 };
 
-const Banner = ({
-    style,
-    screenTitle,
-    screenSubtitle,
-    backgroundImage,
-    agentImage,
-}: BannerProps) => {
-    return (
-        // Banner Background Image
-        <ImageBackground
-            source={backgroundImage}
-            imageStyle={styles.backgroundImageStyle}
-            style={style}
-        >
-            {/* Banner Shape overlay  */}
-            <ShapeOverlay width={'85%'} height={'100%'} preserveAspectRatio="none" />
+const Banner: React.FC<BannerProps> = (props) => {
+    // Loading Indicator State
+    const [isImageLoading, setIsImageLoading] = React.useState<boolean>(true);
+    function handleImageLoading(flag: boolean) {
+        setIsImageLoading(flag);
+    }
 
-            {/* Agent Image */}
-            {agentImage ? (
-                <View style={styles.agentContainerStyle}>
-                    <Image source={agentImage} style={styles.agentImageStyle} />
-                </View>
+    return (
+        <View style={styles.bannerContainer}>
+            {/* Loading Indicator  */}
+            {isImageLoading ? (
+                <ActivityIndicator
+                    style={styles.activityIndicatorStyle}
+                    size={'small'}
+                    color={Colors.white}
+                />
             ) : null}
-            {/* Label */}
-            <View style={styles.labelContainerStyle}>
-                <Text style={styles.labelStyle}>{` \\\\ ${screenTitle}`}</Text>
-                {screenSubtitle ? <Text style={styles.subLabelStyle}>{screenSubtitle}</Text> : null}
-            </View>
-        </ImageBackground>
+            {/* Background Image */}
+            <ImageBackground
+                source={
+                    props.backgroundImageUri
+                        ? { uri: props.backgroundImageUri }
+                        : props.defaultBackgroundImage
+                        ? images.chooseAgentBackground
+                        : images.mapSelectBackground
+                }
+                imageStyle={styles.backgroundImageStyle}
+                blurRadius={props.backgroundImageBlurRadius}
+                onLoadStart={() => handleImageLoading(true)}
+                onLoadEnd={() => handleImageLoading(false)}
+            >
+                {/* Shape overlay  */}
+                <View style={styles.shapeContainer}>
+                    <ShapeOverlay width={'85%'} height={'100%'} preserveAspectRatio="none" />
+                </View>
+
+                {/* Model Image */}
+                {props.modelImage ? (
+                    <View style={styles.modelContainerStyle}>
+                        <Image source={{ uri: props.modelImage }} style={styles.modelImageStyle} />
+                    </View>
+                ) : null}
+
+                <View style={styles.labelContainerStyle}>
+                    {/* Label */}
+                    <Text numberOfLines={1} adjustsFontSizeToFit={true} style={styles.labelStyle}>
+                        {props.screenTitle}
+                    </Text>
+                    {/* Sub Label */}
+                    {props.screenSubtitle ? (
+                        <Text style={styles.subLabelStyle}>{props.screenSubtitle}</Text>
+                    ) : null}
+                </View>
+                {/* Bottom Highlight Line */}
+                <View style={styles.bottomHighlightLineContainerStyle}>
+                    <View style={styles.bottomHighlightLineStyle} />
+                </View>
+            </ImageBackground>
+        </View>
     );
 };
 
 export default Banner;
 
 const styles = StyleSheet.create({
+    bannerContainer: {
+        width: '100%',
+        height: verticalScale(160),
+    },
+    activityIndicatorStyle: {
+        zIndex: 999,
+        ...StyleSheet.absoluteFillObject,
+    },
     backgroundImageStyle: {
         width: '100%',
         height: '100%',
+        borderBottomLeftRadius: horizontalScale(25),
+        borderBottomRightRadius: horizontalScale(25),
     },
-    agentContainerStyle: {
+    shapeContainer: {
         width: '100%',
         height: '100%',
+        borderBottomLeftRadius: horizontalScale(25),
+        overflow: 'hidden',
+    },
+    modelContainerStyle: {
+        width: '100%',
+        height: verticalScale(160),
         position: 'absolute',
         bottom: 0,
         right: 0,
     },
-    agentImageStyle: {
-        width: '100%',
+    modelImageStyle: {
+        width: '80%',
         height: '100%',
         right: horizontalScale(-30),
         resizeMode: 'stretch',
+        alignSelf: 'flex-end',
         bottom: 0,
     },
     labelContainerStyle: {
-        width: '100%',
-        height: '100%',
+        width: '70%',
         position: 'absolute',
         bottom: 0,
+        top: 0,
         left: 0,
         justifyContent: 'center',
         paddingHorizontal: horizontalScale(16),
@@ -95,11 +144,26 @@ const styles = StyleSheet.create({
         fontFamily: 'Tungsten',
         top: 0,
         bottom: 0,
-        opacity: 0.7,
+        opacity: 0.8,
         marginLeft: horizontalScale(5),
         textTransform: 'uppercase',
         textShadowOffset: { width: 0, height: verticalScale(2) },
         textShadowRadius: moderateScale(2),
         textShadowColor: Colors.black,
+    },
+    bottomHighlightLineContainerStyle: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        bottom: verticalScale(-2),
+        alignItems: 'center',
+    },
+    bottomHighlightLineStyle: {
+        width: '98%',
+        height: '100%',
+        borderColor: Colors.primary,
+        borderBottomWidth: horizontalScale(2),
+        borderBottomRightRadius: horizontalScale(25),
+        borderBottomLeftRadius: horizontalScale(25),
     },
 });
