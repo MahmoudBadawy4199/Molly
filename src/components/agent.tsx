@@ -1,27 +1,23 @@
 // React
 import React from 'react';
-import { StyleSheet, View, Image, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, Image, Platform } from 'react-native';
 // Components
 import BackgroundGradient from './background-gradient';
+import ImageWithIndicator from './ImageWithIndicator';
 // Utils
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
+// Types
+import { AgentType } from '../types';
 
-type AgentProp = {
-    gradientColors: Array<string>;
-    shadowColor: string;
-    modelImage: number;
-    nameImage: number;
-    roleImage: number;
-    onPress: () => void;
+type AgentProps = {
+    data: AgentType;
 };
-
-const Agent = (props: AgentProp) => {
-    const shadowColor = props.shadowColor;
+const Agent = ({ data }: AgentProps) => {
     return (
-        <TouchableOpacity onPress={props.onPress} style={[styles.container, { shadowColor }]}>
+        <View style={[styles.container, { shadowColor: data.shadowColor }]}>
             {/* Background Gradient */}
             <BackgroundGradient
-                gradientColors={props.gradientColors}
+                gradientColors={data.gradientColors}
                 locations={[0, 0.25, 0.5, 0.75, 1]}
                 style={styles.gradientStyle}
                 start={{ x: 0, y: 0 }}
@@ -32,46 +28,56 @@ const Agent = (props: AgentProp) => {
             <View style={styles.blackOverlay} />
 
             {/* Role */}
-            <Image style={styles.roleStyle} source={props.roleImage} />
+            <Image style={styles.roleStyle} source={{ uri: data.roleImage }} />
 
             {/* Name */}
-            <Image style={styles.nameStyle} source={props.nameImage} />
+            <Image style={styles.nameStyle} source={{ uri: data.nameImage }} />
 
             {/* Model */}
-            <Image style={styles.modelStyle} source={props.modelImage} />
-        </TouchableOpacity>
+            <ImageWithIndicator style={styles.modelStyle} source={{ uri: data.modelImage }} />
+
+            {/* Shadow Under Component Workaround For Android */}
+            {Platform.OS === 'android' ? (
+                <View style={[styles.shadowWorkaround, { backgroundColor: data.shadowColor }]} />
+            ) : null}
+        </View>
     );
 };
 
 export default Agent;
 
 const styles = StyleSheet.create({
-    gradientStyle: {
-        width: '100%',
-        height: '100%',
-        borderRadius: moderateScale(10),
-        position: 'absolute',
-    },
-    blackOverlay: {
-        width: '100%',
-        height: '96%',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-        backgroundColor: 'black',
-        opacity: 0.2,
-        borderRadius: moderateScale(10),
-    },
     container: {
+        width: '98%',
+        height: verticalScale(100),
+        alignSelf: 'center',
         flexDirection: 'row',
-        height: '25%',
+        marginVertical: verticalScale(25),
         shadowOffset: {
             width: 0,
             height: verticalScale(4),
         },
         shadowOpacity: 0.5,
         shadowRadius: 0,
+    },
+    gradientStyle: {
+        width: '100%',
+        height: '100%',
+        borderRadius: moderateScale(10),
+        position: 'absolute',
+        zIndex: -3,
+    },
+    blackOverlay: {
+        width: '100%',
+        height: '96%',
+        position: 'absolute',
+        zIndex: -2,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'black',
+        opacity: 0.2,
+        borderRadius: moderateScale(10),
     },
     roleStyle: {
         flex: 0.08,
@@ -101,11 +107,21 @@ const styles = StyleSheet.create({
     },
     modelStyle: {
         height: verticalScale(120),
-        width: horizontalScale(120),
+        width: horizontalScale(160),
+        zIndex: -1,
         resizeMode: 'stretch',
         position: 'absolute',
         right: 0,
         bottom: 0,
         borderBottomRightRadius: moderateScale(10),
+    },
+    shadowWorkaround: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        opacity: 0.5,
+        zIndex: -5,
+        borderRadius: moderateScale(10),
+        bottom: verticalScale(-5),
     },
 });
