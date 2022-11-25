@@ -2,6 +2,7 @@ const images = {
     // app
     backgroundOverlay: require('./app/bg-overlay.png'),
     mapSelectBackground: require('./app/map-select-background.webp'),
+    chooseAgentBackground: require('./app/select-agents-background-image.webp'),
     // mock
     brim: require('./mock/brimstone-img2.png'),
     viper: require('./mock/viper-img.png'),
