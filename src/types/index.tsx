@@ -1,6 +1,5 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { StyleProp, ViewStyle } from 'react-native';
 
 ////////////////////////////// { NAVIGATION } //////////////////////////////
 
@@ -20,21 +19,28 @@ export type TabRouteProp = RouteProp<TabNavigatorParamList, keyof TabNavigatorPa
 // Home Stack Types
 export type HomeStackParamList = {
     AgentSelect: undefined;
-    MapSelect: undefined;
-    LineupSelect: undefined;
-    LineupDetails: undefined;
+    MapSelect: {
+        agentID: number;
+    };
+    LineupSelect: {
+        agentID: number;
+        mapItem: MapItemType;
+    };
+    LineupDetails: {
+        lineupDetailsData: LineupDetailsType;
+    };
 };
 
 // Favourites Stack Types
 export type FavouritesStackParamList = {
-    Favourites: undefined;
+    FavouritesScreen: undefined;
     MapSelect: undefined;
     LineupSelect: undefined;
     LineupDetails: undefined;
 };
 export type FavouritesScreenNavigationProp = StackNavigationProp<
     FavouritesStackParamList,
-    'Favourites'
+    'FavouritesScreen'
 >;
 export type AgentScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AgentSelect'>;
 export type MapSelectScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'MapSelect'>;
@@ -43,13 +49,37 @@ export type LineupSelectScreenNavigationProp = StackNavigationProp<
     'LineupSelect'
 >;
 
-////////////////////////////// { SCREENS } //////////////////////////////
-
-////////////////////////////// { COMPONENTS } //////////////////////////////
-// Map-Item Component
-export type MapItemProps = {
+export type MapItemType = {
+    id: number;
     mapName: string;
-    mapImage: number | undefined;
-    style?: StyleProp<ViewStyle> | undefined;
-    onPress: () => void;
+    splashImage: string;
+    sites: SiteType[];
+};
+
+export type SiteType = {
+    letter: string;
+    minimapImage: string;
+};
+
+export type AgentType = {
+    id: number;
+    name: string;
+    gradientColors: Array<string>;
+    shadowColor: string;
+    modelImage: string;
+    nameImage: string;
+    roleImage: string;
+    lineups: number[];
+};
+export type sectionType = {
+    title: string;
+    screenshots: string[];
+};
+
+export type LineupDetailsType = {
+    setupID: number;
+    lineupCallout: string;
+    lineupMinimap: string;
+    lineupVideoID: string;
+    sections: sectionType[];
 };
