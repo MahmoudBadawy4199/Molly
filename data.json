@@ -1,0 +1,195 @@
+{
+    "agents": [
+        {
+            "id": 0,
+            "name": "viper",
+            "modelImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/agents%2Fbrimstone%2Fbrim-ps2.png?alt=media&token=c7eac811-b2d7-4f1d-bdb1-9162b5c75e4d",
+            "nameImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/agents%2Fbrimstone%2Ftitle_img.png?alt=media&token=437297d9-ed30-4040-a556-63a46de7ac9d",
+            "roleImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/icons%2Fcontroller_icon.png?alt=media&token=139e09bf-40e0-44e1-9a7b-b4f973ac7f8f",
+            "gradientColors": [
+                "rgba(104, 20, 0, 1)",
+                "rgba(159, 58, 4,1)",
+                "rgba(183, 151, 129,1)",
+                "rgba(255, 237, 203,1)",
+                "rgba(255, 237, 173,1)"
+            ],
+            "shadowColor": "#FF972F",
+            "lineups": [0]
+        },
+        {
+            "id": 1,
+            "name": "sova",
+            "modelImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/agents%2Fviper%2Fviper_ps.png?alt=media&token=abed3f4c-5279-49ec-a269-469eede7d82e",
+            "nameImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/agents%2Fbrimstone%2Ftitle_img.png?alt=media&token=437297d9-ed30-4040-a556-63a46de7ac9d",
+            "roleImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/icons%2Fcontroller_icon.png?alt=media&token=139e09bf-40e0-44e1-9a7b-b4f973ac7f8f",
+            "gradientColors": [
+                "rgba(33, 55, 38, 1)",
+                "rgba(58, 115, 97,1)",
+                "rgba(100, 161, 113,1)",
+                "rgba(176, 255, 176,1)",
+                "rgba(173, 255, 200,1)"
+            ],
+            "shadowColor": "#89F476",
+            "lineups": [0, 1]
+        }
+    ],
+    "maps": [
+        {
+            "id": 0,
+            "mapName": "Ascent",
+            "splashImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/maps%2Fascent.webp?alt=media&token=8b5e1e8d-af80-4148-b11c-d0befcfc0793",
+            "sites": [
+                {
+                    "letter": "A",
+                    "minimapImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fminimap.png?alt=media&token=104843b1-3b42-41f5-a6f7-1fea8ff5c071"
+                },
+                {
+                    "letter": "B",
+                    "minimapImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fminimap.png?alt=media&token=104843b1-3b42-41f5-a6f7-1fea8ff5c071"
+                },
+
+                {
+                    "letter": "C",
+                    "minimapImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fminimap.png?alt=media&token=104843b1-3b42-41f5-a6f7-1fea8ff5c071"
+                }
+            ]
+        },
+        {
+            "id": 1,
+            "mapName": "Bind",
+            "splashImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/maps%2Fascent.webp?alt=media&token=8b5e1e8d-af80-4148-b11c-d0befcfc0793",
+            "sites": [
+                {
+                    "letter": "A",
+                    "minimapImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fminimap.png?alt=media&token=104843b1-3b42-41f5-a6f7-1fea8ff5c071"
+                },
+                {
+                    "letter": "B",
+                    "minimapImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fminimap.png?alt=media&token=104843b1-3b42-41f5-a6f7-1fea8ff5c071"
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "mapName": "Fracture",
+            "splashImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/maps%2Fascent.webp?alt=media&token=8b5e1e8d-af80-4148-b11c-d0befcfc0793",
+            "sites": [
+                {
+                    "letter": "A",
+                    "minimapImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fminimap.png?alt=media&token=104843b1-3b42-41f5-a6f7-1fea8ff5c071"
+                },
+                {
+                    "letter": "B",
+                    "minimapImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fminimap.png?alt=media&token=104843b1-3b42-41f5-a6f7-1fea8ff5c071"
+                }
+            ]
+        }
+    ],
+    "lineups": {
+        "0": {
+            "0": {
+                "A": [
+                    {
+                        "setupID": 1,
+                        "lineupCallout": "dish",
+                        "lineupMinimap": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Flineup-map.png?alt=media&token=cf625920-93e5-4734-80db-1257d5950646",
+                        "lineupVideoID": "xIXHAz4v3IA",
+                        "sections": [
+                            {
+                                "title": "spike",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47",
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "position",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "lineup",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "result",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "setupID": 2,
+                        "lineupCallout": "main",
+                        "lineupMinimap": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Flineup-map.png?alt=media&token=cf625920-93e5-4734-80db-1257d5950646",
+                        "lineupVideoID": "xIXHAz4v3IA",
+                        "sections": [
+                            {
+                                "title": "spike",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "position",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "lineup",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "result",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "B": [
+                    {
+                        "setupID": 1,
+                        "lineupCallout": "ARCAAAADEE",
+                        "lineupMinimap": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Flineup-map.png?alt=media&token=cf625920-93e5-4734-80db-1257d5950646",
+                        "lineupVideoID": "xIXHAz4v3IA",
+                        "sections": [
+                            {
+                                "title": "spike",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "position",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "lineup",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            },
+                            {
+                                "title": "result",
+                                "screenshots": [
+                                    "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/lineups%2Fspike.png?alt=media&token=5cacf78d-0d8d-4e45-ab76-b4678084bb47"
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }
+}
