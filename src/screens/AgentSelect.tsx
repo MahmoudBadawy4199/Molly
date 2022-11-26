@@ -2,7 +2,6 @@
 import React from 'react';
 import {
     StyleSheet,
-    View,
     FlatList,
     ListRenderItem,
     ListRenderItemInfo,
@@ -42,16 +41,15 @@ const AgentSelect = () => {
         </TouchableOpacity>
     );
     return (
-        <View style={styles.main}>
-            {/* Container with Background overlay */}
-            <Container style={styles.containerStyle}>
+        <>
+            <Container>
                 {/* Banner */}
                 <Banner
-                    screenTitle="choose your agent"
+                    screenTitle="select your agent"
                     defaultBackgroundImage={'Select Agent'}
                     backgroundImageBlurRadius={3}
                 />
-                {/* Colorful Background Gradient */}
+                {/* Background Gradient */}
                 <BackgroundGradient style={styles.backgroundGradientStyle} />
                 {/* Agents */}
                 <FlatList
@@ -63,20 +61,13 @@ const AgentSelect = () => {
                     renderItem={renderAgentItem}
                 />
             </Container>
-        </View>
+        </>
     );
 };
 
 export default AgentSelect;
 
 const styles = StyleSheet.create({
-    main: {
-        backgroundColor: Colors.darknavy,
-        flex: 1,
-    },
-    containerStyle: {
-        flex: 1,
-    },
     backgroundGradientStyle: {
         width: '100%',
         height: '100%',
@@ -96,7 +87,7 @@ const styles = StyleSheet.create({
         textShadowColor: Colors.black,
     },
     flatListStyle: {
-        marginTop: verticalScale(5),
+        marginTop: verticalScale(3),
     },
     flatListContentContainerStyle: {
         paddingVertical: verticalScale(20),
