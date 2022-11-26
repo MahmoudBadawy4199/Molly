@@ -1,29 +1,24 @@
 // React
 import React from 'react';
-import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 // Components
 import Slider from './slider';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
+import { sectionType } from '../types';
 
 type LineupDetailsSectionProps = {
-    style?: StyleProp<ViewStyle> | undefined;
-    sectionLabelText: string;
-    contentImages?: number[];
+    data: sectionType;
 };
 
-const LineupDetailsSection = ({
-    style,
-    sectionLabelText,
-    contentImages,
-}: LineupDetailsSectionProps) => {
+const LineupDetailsSection = ({ data }: LineupDetailsSectionProps) => {
     return (
-        <View style={style}>
+        <View style={styles.containerStyle}>
             {/* Label */}
-            <Text style={styles.sectionLabelTextStyle}>{sectionLabelText}</Text>
+            <Text style={styles.titleStyle}>{data.title}</Text>
             {/* Images Slider */}
-            <Slider contentImages={contentImages!} />
+            <Slider screenshots={data.screenshots} />
         </View>
     );
 };
@@ -31,7 +26,10 @@ const LineupDetailsSection = ({
 export default LineupDetailsSection;
 
 const styles = StyleSheet.create({
-    sectionLabelTextStyle: {
+    containerStyle: {
+        marginVertical: verticalScale(12),
+    },
+    titleStyle: {
         color: Colors.white,
         fontSize: moderateScale(28),
         fontFamily: 'Tungsten',
