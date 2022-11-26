@@ -1,13 +1,24 @@
 // React
 import React from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback, LayoutAnimation } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    TouchableWithoutFeedback,
+    LayoutAnimation,
+    StyleProp,
+    ViewStyle,
+} from 'react-native';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 // Libraries
 import { Ionicons } from '@expo/vector-icons';
 
-const FavouritesButton = () => {
+type FavouritesButtonProps = {
+    style: StyleProp<ViewStyle> | undefined;
+};
+const FavouritesButton = ({ style }: FavouritesButtonProps) => {
     const [isNotFavourite, setIsNotFavourite] = React.useState<Boolean>(true);
     const toggleFavourite = () => {
         const layoutAnimationConfig = {
@@ -32,6 +43,7 @@ const FavouritesButton = () => {
                 style={[
                     styles.containerStyle,
                     isNotFavourite ? styles.containerStyle : styles.containerStyle_active,
+                    style,
                 ]}
             >
                 {/* Button Text */}
@@ -54,19 +66,19 @@ export default FavouritesButton;
 
 const styles = StyleSheet.create({
     containerStyle: {
-        width: '100%',
-        height: verticalScale(40),
+        width: '45%',
+        height: verticalScale(30),
         paddingHorizontal: horizontalScale(5),
         backgroundColor: Colors.grey,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: moderateScale(5),
-        marginTop: verticalScale(15),
+        zIndex: 10,
     },
     containerStyle_active: {
         width: horizontalScale(50),
-        height: verticalScale(40),
+        height: verticalScale(30),
         paddingHorizontal: horizontalScale(5),
         backgroundColor: Colors.primary,
         flexDirection: 'row',
