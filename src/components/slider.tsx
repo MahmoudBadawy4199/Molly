@@ -1,9 +1,10 @@
 // React
 import React from 'react';
-import { StyleSheet, FlatList, View, Image, Dimensions, ViewToken } from 'react-native';
+import { StyleSheet, FlatList, View, Dimensions, ViewToken } from 'react-native';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
+import ImageWithIndicator from './ImageWithIndicator';
 
 // Global
 const { width } = Dimensions.get('window');
@@ -11,18 +12,18 @@ const viewConfigRef = { viewAreaCoveragePercentThreshold: 95 };
 
 // Types
 type SliderProps = {
-    contentImages: number[];
+    screenshots: string[];
 };
 type ViewableItemsChangedProps = {
     changed: ViewToken[];
 };
 type renderItemProps = {
-    item: number;
+    item: string;
 };
 
-const Slider = ({ contentImages }: SliderProps) => {
+const Slider = ({ screenshots }: SliderProps) => {
     // Ref to Flatlist slider
-    let flatListRef = React.useRef<FlatList<number> | null>(null);
+    let flatListRef = React.useRef<FlatList<string> | null>(null);
     // Image Index for Dots
     const [currentIndex, setCurrentIndex] = React.useState(0);
     // ref to get index of the viewable item in flatlist to update the currentIndex state of dots
@@ -33,11 +34,11 @@ const Slider = ({ contentImages }: SliderProps) => {
     });
     // Flatlist Render Item
     const renderItem = ({ item }: renderItemProps) => {
-        return <Image source={item} style={styles.imageStyle} />;
+        return <ImageWithIndicator source={{ uri: item }} style={styles.imageStyle} />;
     };
 
     // generate the Dots
-    const renderDots = contentImages?.map((_, index: number) => (
+    const renderDots = screenshots?.map((_, index: number) => (
         <View
             key={index.toString()}
             style={[
@@ -53,7 +54,7 @@ const Slider = ({ contentImages }: SliderProps) => {
         <>
             {/* Image Slider */}
             <FlatList
-                data={contentImages}
+                data={screenshots}
                 renderItem={renderItem}
                 keyExtractor={(_, index) => index.toString()}
                 horizontal
@@ -92,5 +93,11 @@ const styles = StyleSheet.create({
         height: verticalScale(10),
         borderRadius: moderateScale(10),
         marginHorizontal: horizontalScale(5),
+    },
+    activityIndicatorStyle: {
+        height: '100%',
+        alignSelf: 'center',
+        zIndex: 1,
+        ...StyleSheet.absoluteFillObject,
     },
 });
