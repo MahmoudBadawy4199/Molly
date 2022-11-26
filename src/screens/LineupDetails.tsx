@@ -1,168 +1,133 @@
 // React
 import React from 'react';
-import { ScrollView, Platform, StyleSheet, Image, Text, View } from 'react-native';
+import {
+    Platform,
+    StyleSheet,
+    FlatList,
+    Text,
+    View,
+    ListRenderItem,
+    ListRenderItemInfo,
+    ActivityIndicator,
+} from 'react-native';
 // Components
 import Container from '../components/container-with-background-overlay';
+import Banner from '../components/banner';
 import BackgroundGradient from '../components/background-gradient';
 import LineupDetailsSection from '../components/lineup-details-section';
 import FavouritesButton from '../components/favourites-button';
 // Libraries
 import YoutubeIframe from 'react-native-youtube-iframe';
+import { useRoute, RouteProp } from '@react-navigation/native';
+
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
-// Assets
-import images from '../assets/images';
-import { ShapeColorOverlay } from '../assets/svg';
+
+// Types
+import { HomeStackParamList, sectionType } from '../types';
 
 const LineupDetails = () => {
+    // Route
+    const route = useRoute<RouteProp<HomeStackParamList, 'LineupDetails'>>();
+    const { lineupDetailsData } = route.params;
+
+    // Loading Indicator for Video Section
+    const [isVideoLoading, setIsVideoLoading] = React.useState<boolean>(true);
+    function handleVideoLoading(flag: boolean) {
+        setIsVideoLoading(flag);
+    }
+
+    // Section Item
+    const renderSectionItem: ListRenderItem<sectionType> = ({
+        item,
+    }: ListRenderItemInfo<sectionType>) => <LineupDetailsSection data={item} />;
+
+    // Video Section Item
+    const renderVideoSection = () => (
+        <>
+            {/* Video Tutorial Section */}
+            <Text style={styles.sectionLabelTextStyle}>video tutorial</Text>
+
+            {/* Loading Indicator */}
+            {isVideoLoading ? (
+                <ActivityIndicator
+                    style={styles.activityIndicatorStyle}
+                    size={'small'}
+                    color={Colors.white}
+                />
+            ) : null}
+
+            {/* Video */}
+            <YoutubeIframe
+                height={verticalScale(185)}
+                videoId={lineupDetailsData.lineupVideoID}
+                onReady={() => handleVideoLoading(false)}
+                forceAndroidAutoplay={false}
+                // To Fix Webview Crash on Android Devices
+                webViewStyle={styles.webViewStyle}
+                webViewProps={{
+                    androidLayerType:
+                        Platform.OS === 'android' && Platform.Version <= 22 ? 'hardware' : 'none',
+                }}
+            />
+        </>
+    );
+
     return (
-        <View style={styles.main}>
-            {/* Container with Background overlay */}
-            <Container style={styles.containerStyle}>
-                {/* Banner */}
-                <View style={styles.bannerContainerStyle}>
-                    <Image source={images.lineupMap} style={styles.lineupMapStyle} />
-                    {/* Colorful Shape Overlay */}
-                    <ShapeColorOverlay
-                        width={'60%'}
-                        height={'100%'}
-                        preserveAspectRatio="none"
-                        style={styles.shapeColorOverlayStyle}
+        <>
+            <Container>
+                <View>
+                    {/* Banner */}
+                    <Banner
+                        screenTitle={`setup #${lineupDetailsData.setupID} \n${lineupDetailsData.lineupCallout}`}
+                        backgroundImageUri={lineupDetailsData.lineupMinimap}
+                        backgroundImageStyle={styles.lineupMinimapStyle}
+                        overlay={'colored'}
                     />
 
-                    {/* Label */}
-                    <View style={styles.labelContainerStyle}>
-                        <Text style={styles.labelStyle}>{`setup #1`}</Text>
-                        <Text style={styles.labelStyle}>Dish</Text>
-                        {/* Add to Favourites Button */}
-                        <FavouritesButton />
-                    </View>
+                    {/* Add to Favourites Button */}
+                    <FavouritesButton style={styles.favouritesButtonStyle} />
                 </View>
-                {/* Body  */}
-                {/* Colorful Background Gradient */}
-                <View style={styles.bodyStyle}>
-                    <BackgroundGradient style={styles.backgroundGradientStyle} />
-                    {/* Modify to Flatlist when Server Data Arrives */}
-                    <ScrollView
-                        style={styles.scrollViewStyle}
-                        contentContainerStyle={styles.scrollViewContentContainerStyle}
-                        showsVerticalScrollIndicator={false}
-                    >
-                        {/* Video Tutorial Section */}
-                        <Text style={styles.sectionLabelTextStyle}>video tutorial</Text>
-                        <YoutubeIframe
-                            height={verticalScale(185)}
-                            videoId={'xIXHAz4v3IA'}
-                            // To Fix Webview Crash on Android Devices
-                            webViewStyle={styles.webViewStyle}
-                            webViewProps={{
-                                androidLayerType:
-                                    Platform.OS === 'android' && Platform.Version <= 22
-                                        ? 'hardware'
-                                        : 'none',
-                            }}
-                        />
 
-                        {/* Static Scrollable Items */}
-                        <LineupDetailsSection
-                            style={{ marginVertical: 10 }}
-                            contentImages={[images.spike, images.lineup, images.result]}
-                            sectionLabelText={'/ spike'}
-                        />
-                        <LineupDetailsSection
-                            style={{ marginVertical: 10 }}
-                            contentImages={[images.position]}
-                            sectionLabelText={'// position'}
-                        />
-                        <LineupDetailsSection
-                            style={{ marginVertical: 10 }}
-                            contentImages={[images.lineup]}
-                            sectionLabelText={'/// lineup'}
-                        />
-                        <LineupDetailsSection
-                            style={{ marginVertical: 10 }}
-                            contentImages={[images.result]}
-                            sectionLabelText={'//// result'}
-                        />
-                    </ScrollView>
-                </View>
+                {/* Background Gradient */}
+                <BackgroundGradient style={styles.backgroundGradientStyle} />
+
+                {/* Sections List */}
+                <FlatList
+                    data={lineupDetailsData.sections}
+                    style={styles.flatListStyle}
+                    keyExtractor={(_, index) => index.toString()}
+                    showsVerticalScrollIndicator={false}
+                    contentContainerStyle={styles.flatListContentContainerStyle}
+                    ListHeaderComponent={renderVideoSection()}
+                    renderItem={renderSectionItem}
+                />
             </Container>
-        </View>
+        </>
     );
 };
 
 export default LineupDetails;
 
 const styles = StyleSheet.create({
-    main: {
-        backgroundColor: Colors.darknavy,
-        flex: 1,
-    },
-    containerStyle: {
-        flex: 1,
-    },
-    bannerContainerStyle: {
-        flex: 0.5,
-        shadowColor: Colors.black,
-        shadowOffset: {
-            width: 0,
-            height: verticalScale(2),
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: moderateScale(5),
-        elevation: moderateScale(12),
-        zIndex: 10,
-        borderBottomWidth: 0.4,
-        borderColor: Colors.black,
-    },
-    lineupMapStyle: {
+    lineupMinimapStyle: {
         width: '70%',
-        height: '100%',
-        alignSelf: 'flex-end',
-        resizeMode: 'stretch',
+        left: undefined,
     },
-    shapeColorOverlayStyle: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-    },
-    labelContainerStyle: {
-        width: '50%',
-        height: '100%',
+    favouritesButtonStyle: {
         position: 'absolute',
         bottom: 0,
         left: 0,
-        justifyContent: 'center',
-        paddingHorizontal: horizontalScale(16),
-    },
-    labelStyle: {
-        color: Colors.white,
-        fontSize: moderateScale(32),
-        fontFamily: 'Tungsten',
-        top: 0,
-        bottom: 0,
-        textTransform: 'uppercase',
-        textShadowOffset: { width: 0, height: verticalScale(4) },
-        textShadowRadius: moderateScale(2),
-        textShadowColor: Colors.black,
-        letterSpacing: 0.5,
-    },
-    bodyStyle: {
-        flex: 1,
+        marginLeft: horizontalScale(16),
+        marginBottom: verticalScale(10),
     },
     backgroundGradientStyle: {
         width: '100%',
         height: '100%',
-        zIndex: -2,
         position: 'absolute',
-    },
-    scrollViewStyle: {
-        flex: 1,
-    },
-    scrollViewContentContainerStyle: {
-        paddingTop: verticalScale(15),
-        paddingBottom: verticalScale(25),
+        top: verticalScale(140),
+        zIndex: -2,
     },
     sectionLabelTextStyle: {
         color: Colors.white,
@@ -176,7 +141,19 @@ const styles = StyleSheet.create({
         textShadowRadius: moderateScale(1),
         textShadowColor: Colors.black,
     },
+    activityIndicatorStyle: {
+        zIndex: 100,
+        ...StyleSheet.absoluteFillObject,
+    },
     webViewStyle: {
         opacity: 0.99,
+    },
+    flatListStyle: {
+        marginTop: verticalScale(3),
+        borderTopRightRadius: verticalScale(10),
+        borderTopLeftRadius: verticalScale(10),
+    },
+    flatListContentContainerStyle: {
+        paddingVertical: verticalScale(20),
     },
 });
