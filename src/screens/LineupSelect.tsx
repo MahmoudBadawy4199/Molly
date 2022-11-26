@@ -1,94 +1,113 @@
 // React
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, FlatList, Text, ListRenderItem, ListRenderItemInfo } from 'react-native';
+// Libraries
+import { useRoute, RouteProp } from '@react-navigation/native';
 // Components
 import Container from '../components/container-with-background-overlay';
 import Banner from '../components/banner';
+import BackgroundGradient from '../components/background-gradient';
 import SitePicker from '../components/site-picker';
 // Utils
 import Colors from '../utils/Colors';
 import { moderateScale, verticalScale } from '../utils/Scale';
-// Assets
-import images from '../assets/images';
+// Types
+import { HomeStackParamList, LineupDetailsType, SiteType } from '../types';
+// Data
+import data from '../../data.json';
 
 const LineupSelect = () => {
+    // Route
+    const route = useRoute<RouteProp<HomeStackParamList, 'LineupSelect'>>();
+    const { agentID, mapItem } = route.params;
+
+    // Data Manipulation
+    const allLineupsInMap = data.lineups[mapItem.id as unknown as keyof typeof data.lineups];
+
+    const sitesWhereAgentHasLineups =
+        allLineupsInMap[agentID as unknown as keyof typeof allLineupsInMap];
+
+    const sitesData: SiteType[] = mapItem.sites.filter((site) =>
+        Object.keys(sitesWhereAgentHasLineups).find(
+            (agentLineupSite) => agentLineupSite.toLowerCase() === site.letter.toLowerCase(),
+        ),
+    );
+
+    const lineupsInEachSite: Array<LineupDetailsType[]> = Object.keys(
+        sitesWhereAgentHasLineups,
+    ).map((siteLetter) => {
+        return sitesWhereAgentHasLineups[
+            siteLetter as unknown as keyof typeof sitesWhereAgentHasLineups
+        ];
+    });
+    // Render Item
+    const renderSitePickerItem: ListRenderItem<SiteType> = ({
+        item,
+        index,
+    }: ListRenderItemInfo<SiteType>) => (
+        <SitePicker
+            style={styles.sitePickerItemStyle}
+            siteLetter={item.letter}
+            siteImage={item.minimapImage}
+            data={lineupsInEachSite[index]}
+        />
+    );
+
     return (
-        <View style={styles.main}>
-            {/* Container with Background overlay */}
-            <Container style={styles.containerStyle}>
+        <>
+            <Container>
                 {/* Banner */}
-                <View style={styles.bannerContainerStyle}>
-                    <Banner
-                        screenTitle="Lineups"
-                        screenSubtitle={`35°48'BI\\"N 106°08'YQ\\"W`}
-                        backgroundImage={images.ascent}
-                    />
-                </View>
-                {/* Body  */}
-                <ScrollView
-                    style={styles.scrollViewStyle}
-                    contentContainerStyle={styles.scrollViewContentContainerStyle}
+                <Banner
+                    screenTitle="select Lineup"
+                    screenSubtitle={`${data.agents[agentID].name} >> ${mapItem.mapName}`}
+                    backgroundImageUri={mapItem.splashImage}
+                />
+
+                {/* Background Gradient */}
+                <BackgroundGradient style={styles.backgroundGradientStyle} />
+
+                {/* Site Picker List */}
+                <FlatList
+                    data={sitesData}
+                    renderItem={renderSitePickerItem}
+                    style={styles.flatListStyle}
+                    ListHeaderComponent={<Text style={styles.sitesTextStyle}>Sites</Text>}
+                    contentContainerStyle={styles.flatListContentContainerStyle}
                     showsVerticalScrollIndicator={false}
-                >
-                    {/* Static Scrollable Items */}
-                    <Text style={styles.sitesTextStyle}>Sites</Text>
-                    <SitePicker
-                        style={styles.sitePickerItemStyle}
-                        siteLetter={'A'}
-                        siteImage={images.minimap}
-                    />
-                    <SitePicker
-                        style={styles.sitePickerItemStyle}
-                        siteLetter={'B'}
-                        siteImage={images.minimap}
-                    />
-                </ScrollView>
+                />
             </Container>
-        </View>
+        </>
     );
 };
 
 export default LineupSelect;
 
 const styles = StyleSheet.create({
-    main: {
-        backgroundColor: Colors.darknavy,
-        flex: 1,
-    },
-    containerStyle: {
-        flex: 1,
-    },
-    bannerContainerStyle: {
-        flex: 0.5,
-        shadowColor: Colors.black,
-        shadowOffset: {
-            width: 0,
-            height: verticalScale(2),
-        },
-        shadowOpacity: 0.5,
-        shadowRadius: moderateScale(5),
-        elevation: moderateScale(12),
-        zIndex: 10,
-        borderBottomWidth: 0.4,
-        borderColor: Colors.black,
-    },
-    scrollViewStyle: {
-        flex: 1,
-        padding: moderateScale(16),
-    },
-    scrollViewContentContainerStyle: {
-        paddingBottom: verticalScale(25),
+    backgroundGradientStyle: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+        top: verticalScale(140),
+        zIndex: -2,
     },
     sitesTextStyle: {
+        paddingTop: verticalScale(10),
         color: Colors.white,
         fontSize: moderateScale(32),
         fontFamily: 'Tungsten',
-        backgroundColor: Colors.darknavy,
         textTransform: 'uppercase',
+        alignSelf: 'flex-start',
         letterSpacing: 0.5,
         textShadowOffset: { width: 0, height: verticalScale(2) },
-        textShadowRadius: moderateScale(1),
-        textShadowColor: Colors.accent,
+        textShadowRadius: moderateScale(2),
+        textShadowColor: Colors.black,
+        elevation: verticalScale(12),
+    },
+    flatListStyle: {
+        marginTop: verticalScale(3),
+    },
+    flatListContentContainerStyle: {
+        paddingHorizontal: moderateScale(16),
     },
     sitePickerItemStyle: {
         width: '100%',
