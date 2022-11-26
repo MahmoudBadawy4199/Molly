@@ -19,14 +19,16 @@ import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 // Libraries
 import { Ionicons } from '@expo/vector-icons';
+import { LineupDetailsType } from '../types';
 
 type SitePickerProps = {
     style?: StyleProp<ViewStyle> | undefined;
     siteLetter: string;
-    siteImage?: number;
+    siteImage: string;
+    data: LineupDetailsType[];
 };
 
-const SitePicker = ({ style, siteLetter, siteImage }: SitePickerProps) => {
+const SitePicker = ({ style, siteLetter, siteImage, data }: SitePickerProps) => {
     const [isDropped, setIsDropped] = React.useState<Boolean>(false);
     const animationController = React.useRef(new Animated.Value(0)).current;
 
@@ -76,7 +78,7 @@ const SitePicker = ({ style, siteLetter, siteImage }: SitePickerProps) => {
                     </View>
                     {/* Site Minimap Image */}
                     <View style={styles.siteMinimapImageContainerStyle}>
-                        <Image source={siteImage} style={styles.siteMinimapImageStyle} />
+                        <Image source={{ uri: siteImage }} style={styles.siteMinimapImageStyle} />
                     </View>
                 </View>
             </TouchableWithoutFeedback>
@@ -93,9 +95,9 @@ const SitePicker = ({ style, siteLetter, siteImage }: SitePickerProps) => {
                         gradientColors={[Colors.primary, Colors.accent, Colors.dark]}
                         locations={[0, 0.5, 1]}
                     />
-                    {/* Static Drop Down Items For Mocking */}
-                    <SitePickerDropDownItem />
-                    <SitePickerDropDownItem />
+                    {data.map((item) => (
+                        <SitePickerDropDownItem key={item.setupID} data={item} />
+                    ))}
                 </View>
             ) : null}
         </>

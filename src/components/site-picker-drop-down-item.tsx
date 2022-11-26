@@ -1,41 +1,55 @@
 // React
 import React from 'react';
-import { StyleSheet, Image, Text, View, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+// Components
+import ImageWithIndicator from './ImageWithIndicator';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
-// Assets
-import images from '../assets/images';
+
 // Libraries
 import { useNavigation } from '@react-navigation/native';
 // Types
-import { LineupSelectScreenNavigationProp } from '../types';
+import { LineupDetailsType, LineupSelectScreenNavigationProp } from '../types';
 
-function SitePickerDropDownItem() {
+type SitePickerDropDownItemProps = {
+    data: LineupDetailsType;
+};
+
+const SitePickerDropDownItem = ({ data }: SitePickerDropDownItemProps) => {
     // Navigation
     const navigation = useNavigation<LineupSelectScreenNavigationProp>();
-    function navigationHandler() {
-        navigation.navigate('LineupDetails');
+    function navigationHandler(lineupDetailsData: LineupDetailsType) {
+        navigation.navigate('LineupDetails', { lineupDetailsData });
     }
 
     return (
-        <TouchableWithoutFeedback onPress={navigationHandler}>
+        <TouchableOpacity activeOpacity={1} onPress={() => navigationHandler(data)}>
             <View style={styles.containerStyle}>
                 {/* Black Background Overlay */}
                 <View style={styles.blackBackgroundOverlayStyle} />
-                {/* Label & SubLabel */}
+
                 <View style={styles.textsContainerStyle}>
-                    <Text style={styles.setupLabel}>setup #1</Text>
-                    <Text style={styles.setupLabel}>Dish</Text>
+                    {/* Label */}
+                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.textStyle}>
+                        setup #{data.setupID}
+                    </Text>
+                    {/* Sub Label */}
+                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.textStyle}>
+                        {data.lineupCallout}
+                    </Text>
                 </View>
                 {/* Setup Image */}
                 <View style={styles.setupImageContainerStyle}>
-                    <Image source={images.lineupMap} style={styles.setupImageStyle} />
+                    <ImageWithIndicator
+                        source={{ uri: data.lineupMinimap }}
+                        style={styles.setupImageStyle}
+                    />
                 </View>
             </View>
-        </TouchableWithoutFeedback>
+        </TouchableOpacity>
     );
-}
+};
 
 export default SitePickerDropDownItem;
 
@@ -49,15 +63,15 @@ const styles = StyleSheet.create({
     blackBackgroundOverlayStyle: {
         width: '100%',
         height: '100%',
+        position: 'absolute',
         backgroundColor: 'black',
         opacity: 0.5,
-        position: 'absolute',
     },
     textsContainerStyle: {
-        flex: 1.2,
+        flex: 1.5,
         justifyContent: 'center',
     },
-    setupLabel: {
+    textStyle: {
         color: Colors.white,
         fontSize: moderateScale(22),
         fontFamily: 'Tungsten',
@@ -74,7 +88,6 @@ const styles = StyleSheet.create({
     setupImageStyle: {
         width: '100%',
         height: '100%',
-        backgroundColor: Colors.offwhite,
         resizeMode: 'stretch',
     },
 });
