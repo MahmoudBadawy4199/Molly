@@ -1,20 +1,33 @@
 // React
 import React from 'react';
-import { ImageBackground, StyleSheet, Text, ActivityIndicator, View, Image } from 'react-native';
+import {
+    ImageBackground,
+    StyleSheet,
+    Text,
+    ActivityIndicator,
+    View,
+    Image,
+    StyleProp,
+    ImageStyle,
+} from 'react-native';
 // Utils
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 import Colors from '../utils/Colors';
 // Assets
-import { ShapeOverlay } from '../assets/svg';
+import { ShapeColoredOverlay, ShapeBlackOverlay } from '../assets/svg';
 import images from '../assets/images';
 
+type ScreenDefaultBackgroundImage = 'Select Agent' | 'Select Map';
+type OverlayType = 'black' | 'colored';
 type BannerProps = {
     screenTitle: string;
     screenSubtitle?: string;
     modelImage?: string;
     backgroundImageUri?: string;
     backgroundImageBlurRadius?: number;
-    defaultBackgroundImage?: 'Select Agent' | 'Select Map';
+    defaultBackgroundImage?: ScreenDefaultBackgroundImage;
+    backgroundImageStyle?: StyleProp<ImageStyle> | undefined;
+    overlay?: OverlayType;
 };
 
 const Banner: React.FC<BannerProps> = (props) => {
@@ -24,6 +37,19 @@ const Banner: React.FC<BannerProps> = (props) => {
         setIsImageLoading(flag);
     }
 
+    const defaultBackgroundImage = (): number => {
+        return props.defaultBackgroundImage === 'Select Agent'
+            ? images.agentSelectBannerImage
+            : images.mapSelectBannerImage;
+    };
+
+    const overlay = () => {
+        return props.overlay === 'colored' ? (
+            <ShapeColoredOverlay width={'60%'} height={'100%'} preserveAspectRatio="none" />
+        ) : (
+            <ShapeBlackOverlay width={'85%'} height={'100%'} preserveAspectRatio="none" />
+        );
+    };
     return (
         <View style={styles.bannerContainer}>
             {/* Loading Indicator  */}
@@ -39,19 +65,15 @@ const Banner: React.FC<BannerProps> = (props) => {
                 source={
                     props.backgroundImageUri
                         ? { uri: props.backgroundImageUri }
-                        : props.defaultBackgroundImage
-                        ? images.chooseAgentBackground
-                        : images.mapSelectBackground
+                        : defaultBackgroundImage()
                 }
-                imageStyle={styles.backgroundImageStyle}
+                imageStyle={[styles.backgroundImageStyle, props.backgroundImageStyle]}
                 blurRadius={props.backgroundImageBlurRadius}
                 onLoadStart={() => handleImageLoading(true)}
                 onLoadEnd={() => handleImageLoading(false)}
             >
                 {/* Shape overlay  */}
-                <View style={styles.shapeContainer}>
-                    <ShapeOverlay width={'85%'} height={'100%'} preserveAspectRatio="none" />
-                </View>
+                <View style={styles.shapeContainer}>{overlay()}</View>
 
                 {/* Model Image */}
                 {props.modelImage ? (
@@ -60,14 +82,18 @@ const Banner: React.FC<BannerProps> = (props) => {
                     </View>
                 ) : null}
 
-                <View style={styles.labelContainerStyle}>
+                <View style={styles.screenTitleContainerStyle}>
                     {/* Label */}
-                    <Text numberOfLines={1} adjustsFontSizeToFit={true} style={styles.labelStyle}>
+                    <Text
+                        numberOfLines={2}
+                        adjustsFontSizeToFit={true}
+                        style={styles.screenTitleStyle}
+                    >
                         {props.screenTitle}
                     </Text>
                     {/* Sub Label */}
                     {props.screenSubtitle ? (
-                        <Text style={styles.subLabelStyle}>{props.screenSubtitle}</Text>
+                        <Text style={styles.subTitleStyle}>{props.screenSubtitle}</Text>
                     ) : null}
                 </View>
                 {/* Bottom Highlight Line */}
@@ -85,6 +111,15 @@ const styles = StyleSheet.create({
     bannerContainer: {
         width: '100%',
         height: verticalScale(160),
+        shadowColor: Colors.black,
+        shadowOffset: {
+            width: 0,
+            height: verticalScale(2),
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: moderateScale(5),
+        elevation: moderateScale(12),
+        zIndex: 5,
     },
     activityIndicatorStyle: {
         zIndex: 999,
@@ -93,6 +128,7 @@ const styles = StyleSheet.create({
     backgroundImageStyle: {
         width: '100%',
         height: '100%',
+        resizeMode: 'stretch',
         borderBottomLeftRadius: horizontalScale(25),
         borderBottomRightRadius: horizontalScale(25),
     },
@@ -104,7 +140,7 @@ const styles = StyleSheet.create({
     },
     modelContainerStyle: {
         width: '100%',
-        height: verticalScale(160),
+        height: verticalScale(155),
         position: 'absolute',
         bottom: 0,
         right: 0,
@@ -112,12 +148,12 @@ const styles = StyleSheet.create({
     modelImageStyle: {
         width: '80%',
         height: '100%',
-        right: horizontalScale(-30),
         resizeMode: 'stretch',
         alignSelf: 'flex-end',
         bottom: 0,
+        borderBottomRightRadius: horizontalScale(25),
     },
-    labelContainerStyle: {
+    screenTitleContainerStyle: {
         width: '70%',
         position: 'absolute',
         bottom: 0,
@@ -126,7 +162,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingHorizontal: horizontalScale(16),
     },
-    labelStyle: {
+    screenTitleStyle: {
         color: Colors.white,
         fontSize: moderateScale(32),
         fontFamily: 'Tungsten',
@@ -137,19 +173,21 @@ const styles = StyleSheet.create({
         textShadowRadius: moderateScale(2),
         textShadowColor: Colors.black,
         letterSpacing: 0.5,
+        elevation: horizontalScale(10),
     },
-    subLabelStyle: {
+    subTitleStyle: {
         color: Colors.white,
         fontSize: moderateScale(16),
         fontFamily: 'Tungsten',
         top: 0,
         bottom: 0,
         opacity: 0.8,
-        marginLeft: horizontalScale(5),
         textTransform: 'uppercase',
         textShadowOffset: { width: 0, height: verticalScale(2) },
         textShadowRadius: moderateScale(2),
         textShadowColor: Colors.black,
+        elevation: horizontalScale(6),
+        letterSpacing: 0.5,
     },
     bottomHighlightLineContainerStyle: {
         width: '100%',
