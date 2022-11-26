@@ -10,51 +10,48 @@ import Colors from '../utils/Colors';
 
 const About = () => {
     return (
-        <View style={styles.main}>
-            {/* Gradient */}
-            <BackgroundGradient style={styles.backgroundGradientStyle} />
-            {/* Container with Background overlay */}
-            <Container style={styles.containerStyle}>
-                {/* Label */}
-                <Text style={styles.labelStyle}>about</Text>
-                <View style={styles.textContainerStyle}>
-                    {/* Dot */}
-                    <Text style={styles.dotStyle}>{'\u2022'}</Text>
-                    {/* Text */}
-                    <Text style={styles.textStyle}>
-                        Molly is a fan project that features various lineups for many agents.
-                    </Text>
-                </View>
-                <View style={styles.textContainerStyle}>
-                    {/* Dot */}
-                    <Text style={styles.dotStyle}>{'\u2022'}</Text>
-                    {/* Text */}
-                    <Text style={styles.textStyle}>
-                        Molly was created under Riot Games' "Legal Jibber Jabber" policy using
-                        assets owned by Riot Games. Riot Games does not endorse or sponsor this
-                        project.
-                    </Text>
+        <>
+            <Container>
+                {/* Background Gradient */}
+                <BackgroundGradient style={styles.backgroundGradientStyle} />
+                <View style={styles.textsContainer}>
+                    {/* Label */}
+                    <Text style={styles.labelStyle}>about</Text>
+                    <View style={styles.textContainerStyle}>
+                        {/* Dot */}
+                        <Text style={styles.dotStyle}>{'\u2022'}</Text>
+                        {/* Text */}
+                        <Text style={styles.textStyle}>
+                            Molly is a fan project that features various lineups for many agents.
+                        </Text>
+                    </View>
+                    <View style={styles.textContainerStyle}>
+                        {/* Dot */}
+                        <Text style={styles.dotStyle}>{'\u2022'}</Text>
+                        {/* Text */}
+                        <Text style={styles.textStyle}>
+                            Molly was created under Riot Games' "Legal Jibber Jabber" policy using
+                            assets owned by Riot Games. Riot Games does not endorse or sponsor this
+                            project.
+                        </Text>
+                    </View>
                 </View>
             </Container>
-        </View>
+        </>
     );
 };
 
 export default About;
 
 const styles = StyleSheet.create({
-    main: {
-        backgroundColor: Colors.darknavy,
-        flex: 1,
-    },
-    containerStyle: {
-        flex: 1,
-        paddingHorizontal: moderateScale(16),
-    },
     backgroundGradientStyle: {
         width: '100%',
         height: '100%',
         position: 'absolute',
+        zIndex: -2,
+    },
+    textsContainer: {
+        paddingHorizontal: horizontalScale(16),
     },
     labelStyle: {
         color: Colors.white,
