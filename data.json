@@ -2,7 +2,7 @@
     "agents": [
         {
             "id": 0,
-            "name": "viper",
+            "name": "brimstone",
             "modelImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/agents%2Fbrimstone%2Fbrim-ps2.png?alt=media&token=c7eac811-b2d7-4f1d-bdb1-9162b5c75e4d",
             "nameImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/agents%2Fbrimstone%2Ftitle_img.png?alt=media&token=437297d9-ed30-4040-a556-63a46de7ac9d",
             "roleImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/icons%2Fcontroller_icon.png?alt=media&token=139e09bf-40e0-44e1-9a7b-b4f973ac7f8f",
@@ -18,7 +18,7 @@
         },
         {
             "id": 1,
-            "name": "sova",
+            "name": "viper",
             "modelImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/agents%2Fviper%2Fviper_ps.png?alt=media&token=abed3f4c-5279-49ec-a269-469eede7d82e",
             "nameImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/agents%2Fbrimstone%2Ftitle_img.png?alt=media&token=437297d9-ed30-4040-a556-63a46de7ac9d",
             "roleImage": "https://firebasestorage.googleapis.com/v0/b/molly-ae0a9.appspot.com/o/icons%2Fcontroller_icon.png?alt=media&token=139e09bf-40e0-44e1-9a7b-b4f973ac7f8f",

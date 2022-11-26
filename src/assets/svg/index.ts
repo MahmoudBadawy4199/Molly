@@ -1,8 +1,8 @@
 import DiamondOverlay from './diamond-overlay.svg';
 export { DiamondOverlay };
 
-import ShapeOverlay from './shape-overlay.svg';
-export { ShapeOverlay };
+import ShapeBlackOverlay from './shape-black-overlay.svg';
+export { ShapeBlackOverlay };
 
-import ShapeColorOverlay from './color-shape.svg';
-export { ShapeColorOverlay };
+import ShapeColoredOverlay from './shape-colored-overlay.svg';
+export { ShapeColoredOverlay };
