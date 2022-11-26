@@ -1,27 +1,39 @@
 // React
 import React from 'react';
-import { StyleSheet, Text, Image, View, TouchableWithoutFeedback } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    Image,
+    View,
+    TouchableWithoutFeedback,
+    StyleProp,
+    ViewStyle,
+} from 'react-native';
 // Utils
-import { moderateScale, verticalScale } from '../utils/Scale';
+import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 import Colors from '../utils/Colors';
 // Assets
 import { DiamondOverlay } from '../assets/svg';
 // Types
-import { MapItemProps } from '../types';
+import { MapItemType } from '../types';
 
-const MapItem = ({ mapImage, mapName = '', style, onPress }: MapItemProps) => {
+type MapItemProps = {
+    mapData: MapItemType;
+    style?: StyleProp<ViewStyle>;
+    onPress: () => void;
+};
+const MapItem = ({ mapData, style, onPress }: MapItemProps) => {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.containerStyle, style]}>
                 {/* Map Background Image */}
-                {/* Source Warning Solved When Actual Data Return From Api */}
-                <Image source={mapImage} style={styles.mapImageStyle} />
+                <Image source={{ uri: mapData.splashImage }} style={styles.mapImageStyle} />
                 {/* Darker Overlay To Control Map Brightness */}
                 <View style={styles.darkerOverlayOnMapStyle} />
                 {/* White Diamond Overlay Behind Map Title */}
                 <DiamondOverlay style={styles.diamondOverlayStyle} width={'100%'} height={'100%'} />
                 {/* Map Title */}
-                <Text style={styles.titleStyle}>{mapName}</Text>
+                <Text style={styles.titleStyle}>{mapData.mapName}</Text>
             </View>
         </TouchableWithoutFeedback>
     );
@@ -62,6 +74,7 @@ const styles = StyleSheet.create({
         textShadowOffset: { width: 0, height: verticalScale(2) },
         textShadowRadius: moderateScale(2),
         textShadowColor: Colors.black,
+        elevation: horizontalScale(10),
         letterSpacing: 0.8,
     },
 });
