@@ -45,7 +45,7 @@ const AgentSelect = () => {
             <Container>
                 {/* Banner */}
                 <Banner
-                    screenTitle="select your agent"
+                    screenTitle="select agent"
                     defaultBackgroundImage={'Select Agent'}
                     backgroundImageBlurRadius={3}
                 />

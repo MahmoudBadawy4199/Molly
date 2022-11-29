@@ -27,7 +27,7 @@ export default LineupDetailsSection;
 
 const styles = StyleSheet.create({
     containerStyle: {
-        marginVertical: verticalScale(12),
+        marginTop: verticalScale(10),
     },
     titleStyle: {
         color: Colors.white,

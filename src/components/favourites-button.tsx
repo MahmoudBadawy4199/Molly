@@ -47,7 +47,11 @@ const FavouritesButton = ({ style }: FavouritesButtonProps) => {
                 ]}
             >
                 {/* Button Text */}
-                {isNotFavourite ? <Text style={styles.textStyle}>Add To Favourites</Text> : null}
+                {isNotFavourite ? (
+                    <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textStyle}>
+                        Add To Favourites
+                    </Text>
+                ) : null}
                 {/* Button Icon */}
                 <View
                     style={[
@@ -66,7 +70,7 @@ export default FavouritesButton;
 
 const styles = StyleSheet.create({
     containerStyle: {
-        width: '45%',
+        width: '40%',
         height: verticalScale(30),
         paddingHorizontal: horizontalScale(5),
         backgroundColor: Colors.grey,
@@ -88,16 +92,16 @@ const styles = StyleSheet.create({
         marginTop: verticalScale(15),
     },
     textStyle: {
-        flex: 0.75,
+        flex: 0.7,
         color: Colors.white,
         fontSize: moderateScale(14),
         fontFamily: 'Tungsten',
         textAlignVertical: 'center',
         textTransform: 'uppercase',
-        letterSpacing: 0.5,
+        letterSpacing: 0.8,
     },
     iconStyleContainer: {
-        flex: 0.2,
+        flex: 0.3,
         alignItems: 'center',
         justifyContent: 'center',
     },

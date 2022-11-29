@@ -78,6 +78,8 @@ export type sectionType = {
 
 export type LineupDetailsType = {
     setupID: number;
+    lineupAbilityImage: string;
+    lineupSide: string;
     lineupCallout: string;
     lineupMinimap: string;
     lineupVideoID: string;

@@ -57,13 +57,13 @@ const LineupDetails = () => {
                     color={Colors.white}
                 />
             ) : null}
-
             {/* Video */}
             <YoutubeIframe
-                height={verticalScale(185)}
+                height={verticalScale(155)}
                 videoId={lineupDetailsData.lineupVideoID}
                 onReady={() => handleVideoLoading(false)}
                 forceAndroidAutoplay={false}
+                play={false}
                 // To Fix Webview Crash on Android Devices
                 webViewStyle={styles.webViewStyle}
                 webViewProps={{
@@ -80,7 +80,11 @@ const LineupDetails = () => {
                 <View>
                     {/* Banner */}
                     <Banner
-                        screenTitle={`setup #${lineupDetailsData.setupID} \n${lineupDetailsData.lineupCallout}`}
+                        screenTitle={`setup ${lineupDetailsData.setupID}`}
+                        lineupDetails={{
+                            lineupCallout: lineupDetailsData.lineupCallout,
+                            lineupAbilityImage: lineupDetailsData.lineupAbilityImage,
+                        }}
                         backgroundImageUri={lineupDetailsData.lineupMinimap}
                         backgroundImageStyle={styles.lineupMinimapStyle}
                         overlay={'colored'}
@@ -147,6 +151,7 @@ const styles = StyleSheet.create({
     },
     webViewStyle: {
         opacity: 0.99,
+        backgroundColor: 'black',
     },
     flatListStyle: {
         marginTop: verticalScale(3),
