@@ -27,7 +27,7 @@ export type HomeStackParamList = {
         mapItem: MapItemType;
     };
     LineupDetails: {
-        lineupDetailsData: LineupDetailsType;
+        lineupDetailsData: lineupType;
     };
 };
 
@@ -77,11 +77,26 @@ export type sectionType = {
 };
 
 export type LineupDetailsType = {
-    setupID: number;
+    lineupID: number;
+    mapID: number;
+    agentID: number;
+    siteLetter: string;
+    setupNumber: number;
     lineupAbilityImage: string;
     lineupSide: string;
     lineupCallout: string;
     lineupMinimap: string;
     lineupVideoID: string;
     sections: sectionType[];
+};
+
+export type FavouritesType = {
+    mapID: number;
+    siteLetter: string;
+    setupID: number;
+};
+
+export type lineupType = {
+    isFavourite: boolean;
+    data: LineupDetailsType;
 };
