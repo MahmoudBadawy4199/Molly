@@ -1,97 +1,115 @@
 // React
 import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-// Libraries
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, FlatList, ListRenderItem, ListRenderItemInfo } from 'react-native';
+// Components
+import Banner from '../components/banner';
+import BackgroundGradient from '../components/background-gradient';
+import Container from '../components/container-with-background-overlay';
+import SitePicker from '../components/site-picker';
+import InfoCard from '../components/info-card';
 // Utils
 import Colors from '../utils/Colors';
 import { moderateScale, verticalScale } from '../utils/Scale';
-// Components
-import Container from '../components/container-with-background-overlay';
-import BackgroundGradient from '../components/background-gradient';
-import Agent from '../components/agent';
 // Types
-import { AgentScreenNavigationProp } from '../types';
+import { AgentType } from '../types';
 // Assets
 import images from '../assets/images';
 
+// Static Data Test
+import data from '../../data.json';
+const testData = ['100', '001'];
+
 const Favourites = () => {
-    const navigation = useNavigation<AgentScreenNavigationProp>();
-    function navigationHandler() {
-        navigation.navigate('MapSelect');
-    }
+    // Data Manipulation
+    const agentsIDs = [...new Set(testData.map((item) => item.charAt(0)))];
+    const agentsData = agentsIDs.map((item) => data.agents[+item]);
+    const allFavouriteLineupsData = testData.map(
+        (id) => data.lineups[id as unknown as keyof typeof data.lineups],
+    );
+    const filteredLineupsByAgent = agentsIDs.map((agentID) => {
+        return allFavouriteLineupsData.filter((item) => item.data.agentID === +agentID);
+    });
+    // Render Site Picker
+    const renderSitePickerItem: ListRenderItem<AgentType> = ({
+        item,
+        index,
+    }: ListRenderItemInfo<AgentType>) => (
+        <SitePicker
+            style={styles.sitePickerItemStyle}
+            title={item.name}
+            image={item.modelImage}
+            imageStyle={styles.sitePickerImageStyle}
+            lineupItemsData={filteredLineupsByAgent[index]}
+            favouritesStack={true}
+        />
+    );
     return (
-        <View style={styles.main}>
-            {/* Gradient */}
-            <BackgroundGradient style={styles.backgroundGradientStyle} />
-            {/* Container with Background overlay */}
-            <Container style={styles.containerStyle}>
-                {/* Label */}
-                <Text style={styles.labelStyle}>Favourites</Text>
-                {/* Static Agent Item*/}
-                <View style={styles.agentContainerStyle}>
-                    <Agent
-                        gradientColors={[
-                            'rgba(104, 20, 0, 1)',
-                            'rgba(159, 58, 4,1)',
-                            'rgba(183, 151, 129,1)',
-                            'rgba(255, 237, 203,1)',
-                            'rgba(255, 237, 173,1)',
-                        ]}
-                        shadowColor="#FF972F"
-                        modelImage={images.brim}
-                        nameImage={images.brimName}
-                        roleImage={images.role}
-                        onPress={navigationHandler}
+        <>
+            <Container>
+                {/* Banner */}
+                <Banner
+                    screenTitle="Favourites"
+                    defaultBackgroundImage="Favourites"
+                    backgroundImageStyle={styles.lineupMinimapStyle}
+                    blackOverlayWidthPercentage={'60%'}
+                    bannerBackgroundColor={Colors.lightnavy}
+                />
+                {/* Background Gradient */}
+                <BackgroundGradient style={styles.backgroundGradientStyle} />
+
+                {/* Render Agents */}
+                {testData.length ? (
+                    <FlatList
+                        // {/* Site Picker List */}
+                        data={agentsData}
+                        renderItem={renderSitePickerItem}
+                        style={styles.flatListStyle}
+                        contentContainerStyle={styles.flatListContentContainerStyle}
+                        showsVerticalScrollIndicator={false}
                     />
-                    <Agent
-                        gradientColors={[
-                            'rgba(33, 55, 38, 1)',
-                            'rgba(58, 115, 97,1)',
-                            'rgba(100, 161, 113,1)',
-                            'rgba(176, 255, 176,1)',
-                            'rgba(173, 255, 200,1)',
-                        ]}
-                        shadowColor="#89F476"
-                        modelImage={images.viper}
-                        nameImage={images.viperName}
-                        roleImage={images.role}
-                        onPress={navigationHandler}
+                ) : (
+                    // {/* Empty Favourites Information Card */}
+                    <InfoCard
+                        message="you dont have favourite lineups"
+                        image={images.emptyFavouritesImage}
                     />
-                </View>
+                )}
             </Container>
-        </View>
+        </>
     );
 };
 
 export default Favourites;
 
 const styles = StyleSheet.create({
-    main: {
-        backgroundColor: Colors.darknavy,
-        flex: 1,
+    lineupMinimapStyle: {
+        width: '50%',
+        left: undefined,
+        transform: [{ scaleX: -1 }],
     },
-    containerStyle: {
-        flex: 1,
-        paddingHorizontal: moderateScale(16),
+    sitePickerImageStyle: {
+        position: 'absolute',
+        bottom: 0.1,
+        right: 0,
+        height: verticalScale(80),
+        width: '100%',
     },
     backgroundGradientStyle: {
         width: '100%',
         height: '100%',
         position: 'absolute',
+        top: verticalScale(140),
+        zIndex: -2,
     },
-    labelStyle: {
-        color: Colors.white,
-        fontSize: moderateScale(38),
-        fontFamily: 'Tungsten',
-        textTransform: 'uppercase',
-        marginTop: verticalScale(32),
-        textShadowOffset: { width: 0, height: verticalScale(4) },
-        textShadowRadius: moderateScale(2),
-        textShadowColor: Colors.black,
+    flatListStyle: {
+        marginTop: verticalScale(3),
     },
-    agentContainerStyle: {
-        flex: 1,
-        justifyContent: 'space-evenly',
+    flatListContentContainerStyle: {
+        paddingHorizontal: moderateScale(16),
+        paddingVertical: moderateScale(16),
+    },
+    sitePickerItemStyle: {
+        width: '100%',
+        height: verticalScale(60),
     },
 });
