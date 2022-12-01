@@ -1,7 +1,7 @@
 // React
 import React from 'react';
 // Components
-import { Favourites, MapSelect, LineupSelect, LineupDetails } from '../screens';
+import { Favourites, LineupDetails } from '../screens';
 // Libraries
 import { createStackNavigator } from '@react-navigation/stack';
 // Types
@@ -13,14 +13,12 @@ const FavouritesStack = createStackNavigator<FavouritesStackParamList>();
 const FavouritesStackNavigator = () => {
     return (
         <FavouritesStack.Navigator
-            initialRouteName="Favourites"
+            initialRouteName="FavouritesScreen"
             screenOptions={{
                 headerShown: false,
             }}
         >
-            <FavouritesStack.Screen name="Favourites" component={Favourites} />
-            <FavouritesStack.Screen name="MapSelect" component={MapSelect} />
-            <FavouritesStack.Screen name="LineupSelect" component={LineupSelect} />
+            <FavouritesStack.Screen name="FavouritesScreen" component={Favourites} />
             <FavouritesStack.Screen name="LineupDetails" component={LineupDetails} />
         </FavouritesStack.Navigator>
     );
