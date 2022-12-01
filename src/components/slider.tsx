@@ -1,10 +1,11 @@
 // React
 import React from 'react';
 import { StyleSheet, FlatList, View, Dimensions, ViewToken } from 'react-native';
+// Components
+import ImageWithIndicator from './ImageWithIndicator';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
-import ImageWithIndicator from './ImageWithIndicator';
 
 // Global
 const { width } = Dimensions.get('window');
