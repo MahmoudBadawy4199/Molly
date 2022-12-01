@@ -5,6 +5,7 @@ import { StyleSheet, View, Text, Pressable } from 'react-native';
 // Components
 import { About } from '../screens';
 import HomeStackNavigator from './HomeStackNavigator';
+import FavouritesStackNavigator from './FavouritesStackNavigator';
 
 // Utils
 import { horizontalScale, moderateScale } from '../utils/Scale';
@@ -16,14 +17,13 @@ import { Ionicons } from '@expo/vector-icons';
 
 // Types
 import { TabNavigatorParamList, TabRouteProp } from '../types';
-import FavouritesStackNavigator from './FavouritesStackNavigator';
 
 // navigator
 const BottomTabNavigator = createBottomTabNavigator<TabNavigatorParamList>();
 const TabNavigator = () => {
     return (
         <BottomTabNavigator.Navigator
-            initialRouteName="Favourites"
+            initialRouteName="Home"
             screenOptions={({ route }) => ({
                 headerShown: false,
                 // Tab Bar Styling
@@ -89,7 +89,9 @@ const styles = StyleSheet.create({
         borderBottomColor: Colors.primary,
     },
     iconContainerStyle: {
+        flex: 1,
         alignItems: 'center',
+        justifyContent: 'center',
     },
     tabLabelStyle: {
         color: Colors.grey,
