@@ -12,7 +12,7 @@ import SitePicker from '../components/site-picker';
 import Colors from '../utils/Colors';
 import { moderateScale, verticalScale } from '../utils/Scale';
 // Types
-import { HomeStackParamList, LineupDetailsType, SiteType } from '../types';
+import { HomeStackParamList, lineupType, SiteType } from '../types';
 // Data
 import data from '../../data.json';
 
@@ -22,34 +22,37 @@ const LineupSelect = () => {
     const { agentID, mapItem } = route.params;
 
     // Data Manipulation
-    const allLineupsInMap = data.lineups[mapItem.id as unknown as keyof typeof data.lineups];
-
-    const sitesWhereAgentHasLineups =
-        allLineupsInMap[agentID as unknown as keyof typeof allLineupsInMap];
-
-    const sitesData: SiteType[] = mapItem.sites.filter((site) =>
-        Object.keys(sitesWhereAgentHasLineups).find(
-            (agentLineupSite) => agentLineupSite.toLowerCase() === site.letter.toLowerCase(),
-        ),
+    const agentLineupIDs = Object.keys(data.lineups).filter((item) =>
+        item.startsWith(`${agentID}${mapItem.id}`),
     );
 
-    const lineupsInEachSite: Array<LineupDetailsType[]> = Object.keys(
-        sitesWhereAgentHasLineups,
-    ).map((siteLetter) => {
-        return sitesWhereAgentHasLineups[
-            siteLetter as unknown as keyof typeof sitesWhereAgentHasLineups
-        ];
-    });
-    // Render Item
+    const allLineupsDataByID: lineupType[] = agentLineupIDs.map(
+        (id) => data.lineups[id as unknown as keyof typeof data.lineups],
+    );
+
+    const sitesLetters = [...new Set(allLineupsDataByID.map((item) => item.data.siteLetter))];
+    // Alphabetical Sort A -> B -> C  So Sites Dont Be Random Like C -> A -> B
+    sitesLetters.sort();
+
+    const sitesData: SiteType[] = sitesLetters.map(
+        (key) => mapItem.sites.filter((item) => item.letter === key)[0],
+    );
+    const eachSiteLineups = sitesLetters.map((key) =>
+        allLineupsDataByID.filter((item) => item.data.siteLetter === key),
+    );
+
+    // Render Site Picker
     const renderSitePickerItem: ListRenderItem<SiteType> = ({
         item,
         index,
     }: ListRenderItemInfo<SiteType>) => (
         <SitePicker
             style={styles.sitePickerItemStyle}
-            siteLetter={item.letter}
-            siteImage={item.minimapImage}
-            data={lineupsInEachSite[index]}
+            title={item.letter}
+            image={item.minimapImage}
+            lineupItemsData={eachSiteLineups[index]}
+            imageStyle={styles.sitePickerImageStyle}
+            favouritesStack={false}
         />
     );
 
@@ -91,7 +94,6 @@ const styles = StyleSheet.create({
         zIndex: -2,
     },
     sitesTextStyle: {
-        paddingTop: verticalScale(10),
         color: Colors.white,
         fontSize: moderateScale(32),
         fontFamily: 'Tungsten',
@@ -107,10 +109,18 @@ const styles = StyleSheet.create({
         marginTop: verticalScale(3),
     },
     flatListContentContainerStyle: {
+        paddingVertical: verticalScale(15),
         paddingHorizontal: moderateScale(16),
     },
     sitePickerItemStyle: {
         width: '100%',
         height: verticalScale(60),
+    },
+    sitePickerImageStyle: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'stretch',
+        borderRadius: moderateScale(5),
+        backgroundColor: Colors.offwhite,
     },
 });
