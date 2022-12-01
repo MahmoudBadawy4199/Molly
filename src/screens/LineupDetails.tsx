@@ -57,10 +57,10 @@ const LineupDetails = () => {
                     color={Colors.white}
                 />
             ) : null}
-            {/* Video */}
+            {/* Video Player*/}
             <YoutubeIframe
                 height={verticalScale(155)}
-                videoId={lineupDetailsData.lineupVideoID}
+                videoId={lineupDetailsData.data.lineupVideoID}
                 onReady={() => handleVideoLoading(false)}
                 forceAndroidAutoplay={false}
                 play={false}
@@ -80,18 +80,21 @@ const LineupDetails = () => {
                 <View>
                     {/* Banner */}
                     <Banner
-                        screenTitle={`setup ${lineupDetailsData.setupID}`}
+                        screenTitle={`setup ${lineupDetailsData.data.setupNumber}`}
                         lineupDetails={{
-                            lineupCallout: lineupDetailsData.lineupCallout,
-                            lineupAbilityImage: lineupDetailsData.lineupAbilityImage,
+                            lineupCallout: lineupDetailsData.data.lineupCallout,
+                            lineupAbilityImage: lineupDetailsData.data.lineupAbilityImage,
                         }}
-                        backgroundImageUri={lineupDetailsData.lineupMinimap}
+                        backgroundImageUri={lineupDetailsData.data.lineupMinimap}
                         backgroundImageStyle={styles.lineupMinimapStyle}
                         overlay={'colored'}
                     />
 
                     {/* Add to Favourites Button */}
-                    <FavouritesButton style={styles.favouritesButtonStyle} />
+                    <FavouritesButton
+                        style={styles.favouritesButtonStyle}
+                        active={lineupDetailsData.isFavourite}
+                    />
                 </View>
 
                 {/* Background Gradient */}
@@ -99,7 +102,7 @@ const LineupDetails = () => {
 
                 {/* Sections List */}
                 <FlatList
-                    data={lineupDetailsData.sections}
+                    data={lineupDetailsData.data.sections}
                     style={styles.flatListStyle}
                     keyExtractor={(_, index) => index.toString()}
                     showsVerticalScrollIndicator={false}
@@ -159,6 +162,6 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: verticalScale(10),
     },
     flatListContentContainerStyle: {
-        paddingVertical: verticalScale(20),
+        paddingVertical: verticalScale(15),
     },
 });
