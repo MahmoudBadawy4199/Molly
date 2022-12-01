@@ -5,33 +5,42 @@ import {
     StyleSheet,
     Text,
     View,
-    Image,
     ViewStyle,
     TouchableWithoutFeedback,
     Animated,
     LayoutAnimation,
+    ImageStyle,
 } from 'react-native';
 // Components
 import BackgroundGradient from './background-gradient';
 import SitePickerDropDownItem from './site-picker-drop-down-item';
+import ImageWithIndicator from './ImageWithIndicator';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 // Libraries
 import { Ionicons } from '@expo/vector-icons';
-import { LineupDetailsType } from '../types';
+import { lineupType } from '../types';
 
 type SitePickerProps = {
     style?: StyleProp<ViewStyle> | undefined;
-    siteLetter: string;
-    siteImage: string;
-    data: LineupDetailsType[];
+    title: string;
+    image: string;
+    imageStyle?: StyleProp<ImageStyle>;
+    lineupItemsData: lineupType[];
+    favouritesStack?: boolean;
 };
 
-const SitePicker = ({ style, siteLetter, siteImage, data }: SitePickerProps) => {
+const SitePicker = ({
+    style,
+    title,
+    image,
+    imageStyle,
+    lineupItemsData,
+    favouritesStack,
+}: SitePickerProps) => {
     const [isDropped, setIsDropped] = React.useState<Boolean>(false);
     const animationController = React.useRef(new Animated.Value(0)).current;
-
     // Show or Hide the DropDown List
     const toggleDropDown = () => {
         const arrowAnimationConfig = {
@@ -46,29 +55,28 @@ const SitePicker = ({ style, siteLetter, siteImage, data }: SitePickerProps) => 
         // Change the State for On / Off
         setIsDropped(!isDropped);
     };
-
     // Arrow Icon Animation
     const arrowTransform = animationController.interpolate({
         inputRange: [0, 1],
         outputRange: ['0deg', '90deg'],
     });
-
     return (
         <>
             <TouchableWithoutFeedback onPress={() => toggleDropDown()}>
-                {/* Site Letter Item */}
                 <View style={[styles.containerStyle, style]}>
                     {/* Background Gradient Color */}
                     <BackgroundGradient
-                        style={styles.backgroundGradient}
+                        style={styles.backgroundGradientStyle}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 1, y: 1 }}
                         gradientColors={[Colors.primary, Colors.accent, Colors.dark]}
                         locations={[0, 0.5, 1]}
                     />
-                    {/* Letter Text */}
-                    <View style={styles.letterContainerStyle}>
-                        <Text style={styles.letterTextStyle}>{siteLetter}</Text>
+                    {/* Title */}
+                    <View style={styles.titleContainerStyle}>
+                        <Text adjustsFontSizeToFit numberOfLines={1} style={styles.titleStyle}>
+                            {title}
+                        </Text>
                     </View>
                     {/* Arrow Icon */}
                     <View style={styles.arrowIconContainerStyle}>
@@ -76,27 +84,34 @@ const SitePicker = ({ style, siteLetter, siteImage, data }: SitePickerProps) => 
                             <Ionicons name="md-arrow-forward" size={24} color="white" />
                         </Animated.View>
                     </View>
-                    {/* Site Minimap Image */}
-                    <View style={styles.siteMinimapImageContainerStyle}>
-                        <Image source={{ uri: siteImage }} style={styles.siteMinimapImageStyle} />
+                    {/* Image */}
+                    <View style={styles.imageContainerStyle}>
+                        <ImageWithIndicator
+                            source={{ uri: image }}
+                            style={[styles.imageStyle, imageStyle]}
+                        />
                     </View>
                 </View>
             </TouchableWithoutFeedback>
 
             {/* DropDown List */}
-
             {isDropped ? (
                 <View style={styles.dropDownContainerStyle}>
                     {/* Background Gradient */}
                     <BackgroundGradient
-                        style={styles.backgroundGradient}
+                        style={styles.backgroundGradientStyle}
                         start={{ x: 0, y: 1 }}
                         end={{ x: 1, y: 1 }}
                         gradientColors={[Colors.primary, Colors.accent, Colors.dark]}
                         locations={[0, 0.5, 1]}
                     />
-                    {data.map((item) => (
-                        <SitePickerDropDownItem key={item.setupID} data={item} />
+
+                    {lineupItemsData.map((item) => (
+                        <SitePickerDropDownItem
+                            favouritesStack={favouritesStack}
+                            key={item.data.lineupID}
+                            lineup={item}
+                        />
                     ))}
                 </View>
             ) : null}
@@ -108,8 +123,9 @@ export default SitePicker;
 
 const styles = StyleSheet.create({
     containerStyle: {
-        borderRadius: moderateScale(5),
         flexDirection: 'row',
+        marginVertical: verticalScale(20),
+        borderRadius: moderateScale(5),
         borderWidth: 0.5,
         borderColor: Colors.black,
         shadowColor: Colors.black,
@@ -121,19 +137,18 @@ const styles = StyleSheet.create({
         shadowRadius: moderateScale(5),
         elevation: moderateScale(12),
         zIndex: 10,
-        marginVertical: verticalScale(15),
     },
-    backgroundGradient: {
+    backgroundGradientStyle: {
         ...StyleSheet.absoluteFillObject,
         borderRadius: moderateScale(5),
     },
-    letterContainerStyle: {
-        flex: 3,
+    titleContainerStyle: {
+        flex: 1,
         justifyContent: 'center',
     },
-    letterTextStyle: {
+    titleStyle: {
         color: Colors.white,
-        fontSize: moderateScale(28),
+        fontSize: moderateScale(18),
         fontFamily: 'Tungsten',
         textTransform: 'uppercase',
         letterSpacing: 1,
@@ -143,29 +158,26 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
     },
     arrowIconContainerStyle: {
-        flex: 3,
+        flex: 0.5,
         justifyContent: 'center',
         alignItems: 'flex-end',
-        paddingRight: horizontalScale(15),
+        paddingHorizontal: horizontalScale(15),
     },
-    siteMinimapImageContainerStyle: {
-        flex: 4,
+    imageContainerStyle: {
+        flex: 1.2,
         borderRadius: moderateScale(5),
         alignContent: 'center',
         justifyContent: 'center',
     },
-    siteMinimapImageStyle: {
-        width: '100%',
-        height: '100%',
+    imageStyle: {
         resizeMode: 'stretch',
         borderRadius: moderateScale(5),
-        backgroundColor: Colors.offwhite,
     },
     dropDownContainerStyle: {
         alignSelf: 'center',
         height: undefined,
         width: '95%',
-        top: verticalScale(-20),
+        top: verticalScale(-25),
         paddingTop: verticalScale(15),
         paddingBottom: verticalScale(5),
     },

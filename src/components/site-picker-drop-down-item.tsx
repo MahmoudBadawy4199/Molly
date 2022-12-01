@@ -6,44 +6,90 @@ import ImageWithIndicator from './ImageWithIndicator';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
-
 // Libraries
 import { useNavigation } from '@react-navigation/native';
 // Types
-import { LineupDetailsType, LineupSelectScreenNavigationProp } from '../types';
+import { lineupType, LineupSelectScreenNavigationProp } from '../types';
+
+import data from '../../data.json';
 
 type SitePickerDropDownItemProps = {
-    data: LineupDetailsType;
+    lineup: lineupType;
+    favouritesStack?: boolean;
 };
 
-const SitePickerDropDownItem = ({ data }: SitePickerDropDownItemProps) => {
+const SitePickerDropDownItem = ({ lineup, favouritesStack }: SitePickerDropDownItemProps) => {
     // Navigation
     const navigation = useNavigation<LineupSelectScreenNavigationProp>();
-    function navigationHandler(lineupDetailsData: LineupDetailsType) {
+    function navigationHandler(lineupDetailsData: lineupType) {
         navigation.navigate('LineupDetails', { lineupDetailsData });
     }
+    const mapImage = data.maps[lineup.data.mapID].splashImage;
 
     return (
-        <TouchableOpacity activeOpacity={1} onPress={() => navigationHandler(data)}>
+        <TouchableOpacity activeOpacity={1} onPress={() => navigationHandler(lineup)}>
             <View style={styles.containerStyle}>
                 {/* Black Background Overlay */}
                 <View style={styles.blackBackgroundOverlayStyle} />
 
-                <View style={styles.textsContainerStyle}>
-                    {/* Label */}
-                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.textStyle}>
-                        setup #{data.setupID}
+                {/* Lineup Details */}
+                <View style={styles.lineupDetailsContainerStyle}>
+                    {/* Map Slash Image */}
+                    {favouritesStack ? (
+                        <>
+                            <ImageWithIndicator
+                                source={{ uri: mapImage }}
+                                style={styles.backgroundMapImageStyle}
+                            />
+                            <View style={styles.backgroundMapImageBlackOverlayStyle} />
+                        </>
+                    ) : null}
+                    {/* setup Number Label */}
+                    <Text
+                        adjustsFontSizeToFit={true}
+                        numberOfLines={1}
+                        style={styles.setupTextStyle}
+                    >
+                        setup {lineup.data.setupNumber}
                     </Text>
-                    {/* Sub Label */}
-                    <Text adjustsFontSizeToFit={true} numberOfLines={1} style={styles.textStyle}>
-                        {data.lineupCallout}
+
+                    {/* Callout : Dish / main / .... */}
+                    <Text
+                        adjustsFontSizeToFit={true}
+                        numberOfLines={1}
+                        style={styles.subLabelStyle}
+                    >
+                        {lineup.data.lineupCallout}
                     </Text>
+                    {/* Side Text : attack / defense */}
+                    <Text
+                        adjustsFontSizeToFit={true}
+                        numberOfLines={1}
+                        style={styles.subLabelStyle}
+                    >
+                        {lineup.data.lineupSide}
+                    </Text>
+
+                    {/* Ability Image */}
+                    <View style={styles.abilityImageContainerStyle}>
+                        <ImageWithIndicator
+                            source={{ uri: lineup.data.lineupAbilityImage }}
+                            style={styles.abilityImageStyle}
+                        />
+                    </View>
                 </View>
-                {/* Setup Image */}
-                <View style={styles.setupImageContainerStyle}>
+
+                {/* Minimap Image */}
+                <View
+                    style={[
+                        favouritesStack
+                            ? styles.FavouritesMinimapImageContainerStyle
+                            : styles.minimapImageContainerStyle,
+                    ]}
+                >
                     <ImageWithIndicator
-                        source={{ uri: data.lineupMinimap }}
-                        style={styles.setupImageStyle}
+                        source={{ uri: lineup.data.lineupMinimap }}
+                        style={styles.minimapImageStyle}
                     />
                 </View>
             </View>
@@ -60,6 +106,23 @@ const styles = StyleSheet.create({
         marginVertical: verticalScale(10),
         flexDirection: 'row',
     },
+    backgroundMapImageStyle: {
+        position: 'absolute',
+        resizeMode: 'stretch',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: 0,
+    },
+    backgroundMapImageBlackOverlayStyle: {
+        position: 'absolute',
+        backgroundColor: 'black',
+        opacity: 0.25,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        top: 0,
+    },
     blackBackgroundOverlayStyle: {
         width: '100%',
         height: '100%',
@@ -67,25 +130,50 @@ const styles = StyleSheet.create({
         backgroundColor: 'black',
         opacity: 0.5,
     },
-    textsContainerStyle: {
-        flex: 1.5,
+    lineupDetailsContainerStyle: {
+        flex: 1,
+        padding: moderateScale(10),
         justifyContent: 'center',
     },
-    textStyle: {
+    subLabelStyle: {
         color: Colors.white,
-        fontSize: moderateScale(22),
+        fontSize: moderateScale(18),
+        fontFamily: 'Tungsten',
+        textTransform: 'capitalize',
+        letterSpacing: 1,
+        textShadowOffset: { width: 0, height: verticalScale(2) },
+        textShadowRadius: moderateScale(1),
+        textShadowColor: Colors.black,
+        marginTop: verticalScale(5),
+    },
+    setupTextStyle: {
+        color: Colors.white,
+        fontSize: moderateScale(24),
+        textDecorationLine: 'underline',
         fontFamily: 'Tungsten',
         textTransform: 'uppercase',
         letterSpacing: 1,
         textShadowOffset: { width: 0, height: verticalScale(2) },
         textShadowRadius: moderateScale(1),
         textShadowColor: Colors.black,
-        paddingHorizontal: horizontalScale(10),
     },
-    setupImageContainerStyle: {
-        flex: 2,
+    minimapImageContainerStyle: {
+        flex: 1.5,
     },
-    setupImageStyle: {
+    FavouritesMinimapImageContainerStyle: {
+        flex: 1,
+    },
+    minimapImageStyle: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'stretch',
+    },
+    abilityImageContainerStyle: {
+        width: horizontalScale(24),
+        height: verticalScale(24),
+        marginTop: verticalScale(5),
+    },
+    abilityImageStyle: {
         width: '100%',
         height: '100%',
         resizeMode: 'stretch',
