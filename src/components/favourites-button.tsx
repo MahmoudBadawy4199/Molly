@@ -17,9 +17,11 @@ import { Ionicons } from '@expo/vector-icons';
 
 type FavouritesButtonProps = {
     style: StyleProp<ViewStyle> | undefined;
+    active: boolean;
 };
-const FavouritesButton = ({ style }: FavouritesButtonProps) => {
-    const [isNotFavourite, setIsNotFavourite] = React.useState<Boolean>(true);
+const FavouritesButton = ({ style, active }: FavouritesButtonProps) => {
+    const [isFavourite, setIsFavourite] = React.useState<Boolean>(active);
+
     const toggleFavourite = () => {
         const layoutAnimationConfig = {
             duration: 300,
@@ -35,28 +37,28 @@ const FavouritesButton = ({ style }: FavouritesButtonProps) => {
         // animate the Layout Change When the DropDown Appears or Hide
         LayoutAnimation.configureNext(layoutAnimationConfig);
         // Change the State for On / Off
-        setIsNotFavourite(!isNotFavourite);
+        setIsFavourite(!isFavourite);
     };
     return (
         <TouchableWithoutFeedback onPress={() => toggleFavourite()}>
             <View
                 style={[
                     styles.containerStyle,
-                    isNotFavourite ? styles.containerStyle : styles.containerStyle_active,
+                    isFavourite ? styles.containerStyle_active : styles.containerStyle,
                     style,
                 ]}
             >
                 {/* Button Text */}
-                {isNotFavourite ? (
+                {isFavourite ? null : (
                     <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textStyle}>
                         Add To Favourites
                     </Text>
-                ) : null}
+                )}
                 {/* Button Icon */}
                 <View
                     style={[
                         styles.iconStyleContainer,
-                        styles[isNotFavourite ? 'iconStyleContainer' : 'iconStyleContainer_active'],
+                        styles[isFavourite ? 'iconStyleContainer_active' : 'iconStyleContainer'],
                     ]}
                 >
                     <Ionicons name="heart" size={moderateScale(24)} color={Colors.white} />
