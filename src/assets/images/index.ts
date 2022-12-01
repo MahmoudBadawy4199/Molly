@@ -3,6 +3,8 @@ const images = {
     backgroundOverlay: require('./app/bg-overlay.png'),
     mapSelectBannerImage: require('./app/map-select-background.webp'),
     agentSelectBannerImage: require('./app/select-agents-background-image.webp'),
+    favouritesBannerImage: require('./app/favourites.webp'),
+    emptyFavouritesImage: require('./app/empty.webp'),
     // mock
     brim: require('./mock/brimstone-img2.png'),
     viper: require('./mock/viper-img.png'),
