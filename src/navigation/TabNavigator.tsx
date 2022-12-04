@@ -38,7 +38,13 @@ const TabNavigator = () => {
                 tabBarButton: CustomTabButtonWithBottomLine,
             })}
         >
-            <BottomTabNavigator.Screen name="Favourites" component={FavouritesStackNavigator} />
+            <BottomTabNavigator.Screen
+                name="Favourites"
+                component={FavouritesStackNavigator}
+                options={{
+                    unmountOnBlur: true,
+                }}
+            />
             <BottomTabNavigator.Screen name="Home" component={HomeStackNavigator} />
             <BottomTabNavigator.Screen name="About" component={About} />
         </BottomTabNavigator.Navigator>

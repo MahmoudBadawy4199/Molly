@@ -86,11 +86,11 @@
         }
     ],
 
-    "lineups": {
-        "000": {
-            "isFavourite": true,
+    "lineups": [
+        {
+            "isFavourite": false,
             "data": {
-                "lineupID": 0,
+                "lineupID": "00A1",
                 "mapID": 0,
                 "agentID": 0,
                 "setupNumber": 1,
@@ -129,10 +129,10 @@
                 ]
             }
         },
-        "001": {
-            "isFavourite": true,
+        {
+            "isFavourite": false,
             "data": {
-                "lineupID": 1,
+                "lineupID": "00B1",
                 "mapID": 0,
                 "agentID": 0,
                 "setupNumber": 1,
@@ -171,10 +171,10 @@
                 ]
             }
         },
-        "100": {
-            "isFavourite": true,
+        {
+            "isFavourite": false,
             "data": {
-                "lineupID": 0,
+                "lineupID": "10A1",
                 "mapID": 0,
                 "agentID": 1,
                 "setupNumber": 1,
@@ -213,5 +213,5 @@
                 ]
             }
         }
-    }
+    ]
 }

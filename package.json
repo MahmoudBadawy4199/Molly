@@ -13,6 +13,7 @@
     "@react-native-masked-view/masked-view": "0.2.7",
     "@react-navigation/bottom-tabs": "^6.4.0",
     "@react-navigation/stack": "^6.3.3",
+    "@reduxjs/toolkit": "^1.9.1",
     "expo": "~46.0.16",
     "expo-font": "~10.2.0",
     "expo-linear-gradient": "~11.4.0",
@@ -27,13 +28,15 @@
     "react-native-svg": "12.3.0",
     "react-native-web": "~0.18.7",
     "react-native-webview": "11.23.0",
-    "react-native-youtube-iframe": "^2.2.2"
+    "react-native-youtube-iframe": "^2.2.2",
+    "react-redux": "^8.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@react-native-community/eslint-config": "^3.1.0",
     "@types/react": "~18.0.14",
     "@types/react-native": "^0.69.15",
+    "@types/react-redux": "^7.1.24",
     "@typescript-eslint/eslint-plugin": "^5.41.0",
     "@typescript-eslint/parser": "^5.41.0",
     "eslint": "^8.26.0",

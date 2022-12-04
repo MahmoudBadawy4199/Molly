@@ -6,28 +6,28 @@ import ImageWithIndicator from './ImageWithIndicator';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
-// Libraries
-import { useNavigation } from '@react-navigation/native';
 // Types
-import { lineupType, LineupSelectScreenNavigationProp } from '../types';
+import { lineupType } from '../types';
 
 import data from '../../data.json';
 
 type SitePickerDropDownItemProps = {
     lineup: lineupType;
     favouritesStack?: boolean;
+    onPress: (lineupID: string) => void;
 };
 
-const SitePickerDropDownItem = ({ lineup, favouritesStack }: SitePickerDropDownItemProps) => {
+const SitePickerDropDownItem = ({
+    lineup,
+    favouritesStack,
+    onPress,
+}: SitePickerDropDownItemProps) => {
     // Navigation
-    const navigation = useNavigation<LineupSelectScreenNavigationProp>();
-    function navigationHandler(lineupDetailsData: lineupType) {
-        navigation.navigate('LineupDetails', { lineupDetailsData });
-    }
+
     const mapImage = data.maps[lineup.data.mapID].splashImage;
 
     return (
-        <TouchableOpacity activeOpacity={1} onPress={() => navigationHandler(lineup)}>
+        <TouchableOpacity activeOpacity={1} onPress={() => onPress(lineup.data.lineupID)}>
             <View style={styles.containerStyle}>
                 {/* Black Background Overlay */}
                 <View style={styles.blackBackgroundOverlayStyle} />

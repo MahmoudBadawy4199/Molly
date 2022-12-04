@@ -8,6 +8,9 @@ import { useFonts } from 'expo-font';
 import RootNavigator from './src/navigation/RootNavigator';
 // assets
 import { Tungsten } from './src/assets/fonts';
+// Redux
+import { Provider as ReduxProvider } from 'react-redux';
+import { store } from './src/redux/store';
 
 // Disable RTL
 I18nManager.forceRTL(false);
@@ -23,14 +26,16 @@ export default function App() {
         return null;
     }
     return (
-        <SafeAreaProvider>
-            <NavigationContainer>
-                <SafeAreaView style={styles.appBackgroundStyle}>
-                    <StatusBar barStyle={'light-content'} />
-                    <RootNavigator />
-                </SafeAreaView>
-            </NavigationContainer>
-        </SafeAreaProvider>
+        <ReduxProvider store={store}>
+            <SafeAreaProvider>
+                <NavigationContainer>
+                    <SafeAreaView style={styles.appBackgroundStyle}>
+                        <StatusBar barStyle={'light-content'} />
+                        <RootNavigator />
+                    </SafeAreaView>
+                </NavigationContainer>
+            </SafeAreaProvider>
+        </ReduxProvider>
     );
 }
 

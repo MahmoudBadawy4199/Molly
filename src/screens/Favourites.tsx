@@ -7,29 +7,37 @@ import BackgroundGradient from '../components/background-gradient';
 import Container from '../components/container-with-background-overlay';
 import SitePicker from '../components/site-picker';
 import InfoCard from '../components/info-card';
+// Libraries
+import { useNavigation } from '@react-navigation/native';
 // Utils
 import Colors from '../utils/Colors';
 import { moderateScale, verticalScale } from '../utils/Scale';
 // Types
-import { AgentType } from '../types';
+import { AgentType, FavouritesScreenNavigationProp } from '../types';
 // Assets
 import images from '../assets/images';
-
-// Static Data Test
-import data from '../../data.json';
-const testData = ['100', '001'];
+// Redux
+import { useAppSelector } from '../redux/hooks';
+import { selectAgents, selectLineups } from '../redux/contentSlice';
 
 const Favourites = () => {
-    // Data Manipulation
-    const agentsIDs = [...new Set(testData.map((item) => item.charAt(0)))];
-    const agentsData = agentsIDs.map((item) => data.agents[+item]);
-    const allFavouriteLineupsData = testData.map(
-        (id) => data.lineups[id as unknown as keyof typeof data.lineups],
-    );
-    const filteredLineupsByAgent = agentsIDs.map((agentID) => {
-        return allFavouriteLineupsData.filter((item) => item.data.agentID === +agentID);
+    // Navigation
+    const navigation = useNavigation<FavouritesScreenNavigationProp>();
+    function navigationHandler(lineupID: string) {
+        navigation.navigate('LineupDetails', { lineupID });
+    }
+
+    // Data Manipulation For UI
+    const favouriteLineups = useAppSelector(selectLineups).filter((lineup) => lineup.isFavourite);
+    const agents = useAppSelector(selectAgents);
+
+    const agentsIDs = [...new Set(favouriteLineups.map((lineup) => lineup.data.agentID))];
+    const agentsData = agentsIDs.map((id) => agents.filter((agent) => agent.id === id)[0]);
+    const lineupsFilteredByAgentID = agentsIDs.map((agentID) => {
+        return favouriteLineups.filter((lineup) => lineup.data.agentID === agentID);
     });
-    // Render Site Picker
+
+    // // Render Site Picker
     const renderSitePickerItem: ListRenderItem<AgentType> = ({
         item,
         index,
@@ -39,8 +47,9 @@ const Favourites = () => {
             title={item.name}
             image={item.modelImage}
             imageStyle={styles.sitePickerImageStyle}
-            lineupItemsData={filteredLineupsByAgent[index]}
+            lineupItemsData={lineupsFilteredByAgentID[index]}
             favouritesStack={true}
+            onItemPress={navigationHandler}
         />
     );
     return (
@@ -58,9 +67,8 @@ const Favourites = () => {
                 <BackgroundGradient style={styles.backgroundGradientStyle} />
 
                 {/* Render Agents */}
-                {testData.length ? (
+                {favouriteLineups.length ? (
                     <FlatList
-                        // {/* Site Picker List */}
                         data={agentsData}
                         renderItem={renderSitePickerItem}
                         style={styles.flatListStyle}
@@ -68,7 +76,7 @@ const Favourites = () => {
                         showsVerticalScrollIndicator={false}
                     />
                 ) : (
-                    // {/* Empty Favourites Information Card */}
+                    // Empty Favourites Information Card
                     <InfoCard
                         message="you dont have favourite lineups"
                         image={images.emptyFavouritesImage}

@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, FlatList, Text, ListRenderItem, ListRenderItemInfo } from 'react-native';
 // Libraries
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { useRoute, useNavigation, RouteProp } from '@react-navigation/native';
 // Components
 import Container from '../components/container-with-background-overlay';
 import Banner from '../components/banner';
@@ -12,33 +12,38 @@ import SitePicker from '../components/site-picker';
 import Colors from '../utils/Colors';
 import { moderateScale, verticalScale } from '../utils/Scale';
 // Types
-import { HomeStackParamList, lineupType, SiteType } from '../types';
-// Data
-import data from '../../data.json';
+import { HomeStackParamList, LineupSelectScreenNavigationProp, SiteType } from '../types';
+// Redux
+import { useAppSelector } from '../redux/hooks';
+import { selectAgents, selectLineups, selectMaps } from '../redux/contentSlice';
 
 const LineupSelect = () => {
-    // Route
+    // Navigation & Route
+    const navigation = useNavigation<LineupSelectScreenNavigationProp>();
     const route = useRoute<RouteProp<HomeStackParamList, 'LineupSelect'>>();
-    const { agentID, mapItem } = route.params;
 
-    // Data Manipulation
-    const agentLineupIDs = Object.keys(data.lineups).filter((item) =>
-        item.startsWith(`${agentID}${mapItem.id}`),
+    const { agentID, mapID } = route.params;
+    function navigationHandler(lineupID: string) {
+        navigation.navigate('LineupDetails', { lineupID });
+    }
+    // Data Manipulation For UI
+    const agent = useAppSelector(selectAgents).filter((item) => item.id === agentID)[0];
+    const map = useAppSelector(selectMaps).filter((item) => item.id === mapID)[0];
+    const allLineupsForAgentInThisMap = useAppSelector(selectLineups).filter(
+        (lineup) => lineup.data.agentID === agentID && lineup.data.mapID === mapID,
     );
 
-    const allLineupsDataByID: lineupType[] = agentLineupIDs.map(
-        (id) => data.lineups[id as unknown as keyof typeof data.lineups],
-    );
-
-    const sitesLetters = [...new Set(allLineupsDataByID.map((item) => item.data.siteLetter))];
+    const sitesLetter = [
+        ...new Set(allLineupsForAgentInThisMap.map((item) => item.data.siteLetter)),
+    ];
     // Alphabetical Sort A -> B -> C  So Sites Dont Be Random Like C -> A -> B
-    sitesLetters.sort();
+    sitesLetter.sort();
 
-    const sitesData: SiteType[] = sitesLetters.map(
-        (key) => mapItem.sites.filter((item) => item.letter === key)[0],
+    const sitesData: SiteType[] = sitesLetter.map(
+        (letter) => map.sites.filter((site) => site.letter === letter)[0],
     );
-    const eachSiteLineups = sitesLetters.map((key) =>
-        allLineupsDataByID.filter((item) => item.data.siteLetter === key),
+    const lineupsInEachSite = sitesLetter.map((letter) =>
+        allLineupsForAgentInThisMap.filter((lineup) => lineup.data.siteLetter === letter),
     );
 
     // Render Site Picker
@@ -50,9 +55,10 @@ const LineupSelect = () => {
             style={styles.sitePickerItemStyle}
             title={item.letter}
             image={item.minimapImage}
-            lineupItemsData={eachSiteLineups[index]}
+            lineupItemsData={lineupsInEachSite[index]}
             imageStyle={styles.sitePickerImageStyle}
             favouritesStack={false}
+            onItemPress={navigationHandler}
         />
     );
 
@@ -62,8 +68,8 @@ const LineupSelect = () => {
                 {/* Banner */}
                 <Banner
                     screenTitle="select Lineup"
-                    screenSubtitle={`${data.agents[agentID].name} >> ${mapItem.mapName}`}
-                    backgroundImageUri={mapItem.splashImage}
+                    screenSubtitle={`${agent.name} >> ${map.mapName}`}
+                    backgroundImageUri={map.splashImage}
                 />
 
                 {/* Background Gradient */}

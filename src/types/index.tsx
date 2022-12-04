@@ -1,8 +1,6 @@
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-////////////////////////////// { NAVIGATION } //////////////////////////////
-
 // Root Navigator Types
 export type RootStackParamList = {
     Main: undefined;
@@ -24,30 +22,37 @@ export type HomeStackParamList = {
     };
     LineupSelect: {
         agentID: number;
-        mapItem: MapItemType;
+        mapID: number;
     };
     LineupDetails: {
-        lineupDetailsData: lineupType;
+        lineupID: string;
     };
 };
 
 // Favourites Stack Types
 export type FavouritesStackParamList = {
     FavouritesScreen: undefined;
-    MapSelect: undefined;
-    LineupSelect: undefined;
-    LineupDetails: undefined;
+    LineupDetails: {
+        lineupID: string;
+    };
 };
-export type FavouritesScreenNavigationProp = StackNavigationProp<
-    FavouritesStackParamList,
-    'FavouritesScreen'
->;
+
 export type AgentScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'AgentSelect'>;
 export type MapSelectScreenNavigationProp = StackNavigationProp<HomeStackParamList, 'MapSelect'>;
 export type LineupSelectScreenNavigationProp = StackNavigationProp<
     HomeStackParamList,
     'LineupSelect'
 >;
+export type FavouritesScreenNavigationProp = StackNavigationProp<
+    FavouritesStackParamList,
+    'LineupDetails'
+>;
+
+export type ContentType = {
+    agents: AgentType[];
+    maps: MapItemType[];
+    lineups: lineupType[];
+};
 
 export type MapItemType = {
     id: number;
@@ -77,7 +82,7 @@ export type sectionType = {
 };
 
 export type LineupDetailsType = {
-    lineupID: number;
+    lineupID: string;
     mapID: number;
     agentID: number;
     siteLetter: string;
@@ -88,12 +93,6 @@ export type LineupDetailsType = {
     lineupMinimap: string;
     lineupVideoID: string;
     sections: sectionType[];
-};
-
-export type FavouritesType = {
-    mapID: number;
-    siteLetter: string;
-    setupID: number;
 };
 
 export type lineupType = {

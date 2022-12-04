@@ -19,31 +19,41 @@ import FavouritesButton from '../components/favourites-button';
 // Libraries
 import YoutubeIframe from 'react-native-youtube-iframe';
 import { useRoute, RouteProp } from '@react-navigation/native';
-
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
-
 // Types
 import { HomeStackParamList, sectionType } from '../types';
+// Redux
+import { useAppDispatch, useAppSelector } from '../redux/hooks';
+import { selectLineups } from '../redux/contentSlice';
+import { addToFavourites, removeFromFavourites } from '../redux/favouritesSlice';
 
 const LineupDetails = () => {
+    const dispatch = useAppDispatch();
     // Route
     const route = useRoute<RouteProp<HomeStackParamList, 'LineupDetails'>>();
-    const { lineupDetailsData } = route.params;
+    const { lineupID } = route.params;
 
     // Loading Indicator for Video Section
     const [isVideoLoading, setIsVideoLoading] = React.useState<boolean>(true);
     function handleVideoLoading(flag: boolean) {
         setIsVideoLoading(flag);
     }
-
-    // Section Item
+    const lineup = useAppSelector(selectLineups).filter(
+        (item) => item.data.lineupID === lineupID,
+    )[0];
+    const HandleFavourites = () => {
+        lineup.isFavourite
+            ? dispatch(removeFromFavourites(lineupID))
+            : dispatch(addToFavourites(lineupID));
+    };
+    // // // Section Item
     const renderSectionItem: ListRenderItem<sectionType> = ({
         item,
     }: ListRenderItemInfo<sectionType>) => <LineupDetailsSection data={item} />;
 
-    // Video Section Item
+    // // Video Section Item
     const renderVideoSection = () => (
         <>
             {/* Video Tutorial Section */}
@@ -60,7 +70,7 @@ const LineupDetails = () => {
             {/* Video Player*/}
             <YoutubeIframe
                 height={verticalScale(155)}
-                videoId={lineupDetailsData.data.lineupVideoID}
+                videoId={lineup.data.lineupVideoID}
                 onReady={() => handleVideoLoading(false)}
                 forceAndroidAutoplay={false}
                 play={false}
@@ -80,12 +90,12 @@ const LineupDetails = () => {
                 <View>
                     {/* Banner */}
                     <Banner
-                        screenTitle={`setup ${lineupDetailsData.data.setupNumber}`}
+                        screenTitle={`setup ${lineup.data.setupNumber}`}
                         lineupDetails={{
-                            lineupCallout: lineupDetailsData.data.lineupCallout,
-                            lineupAbilityImage: lineupDetailsData.data.lineupAbilityImage,
+                            lineupCallout: lineup.data.lineupCallout,
+                            lineupAbilityImage: lineup.data.lineupAbilityImage,
                         }}
-                        backgroundImageUri={lineupDetailsData.data.lineupMinimap}
+                        backgroundImageUri={lineup.data.lineupMinimap}
                         backgroundImageStyle={styles.lineupMinimapStyle}
                         overlay={'colored'}
                     />
@@ -93,7 +103,8 @@ const LineupDetails = () => {
                     {/* Add to Favourites Button */}
                     <FavouritesButton
                         style={styles.favouritesButtonStyle}
-                        active={lineupDetailsData.isFavourite}
+                        active={lineup.isFavourite}
+                        onPress={HandleFavourites}
                     />
                 </View>
 
@@ -102,7 +113,7 @@ const LineupDetails = () => {
 
                 {/* Sections List */}
                 <FlatList
-                    data={lineupDetailsData.data.sections}
+                    data={lineup.data.sections}
                     style={styles.flatListStyle}
                     keyExtractor={(_, index) => index.toString()}
                     showsVerticalScrollIndicator={false}

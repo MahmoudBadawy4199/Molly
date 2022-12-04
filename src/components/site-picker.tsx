@@ -29,6 +29,7 @@ type SitePickerProps = {
     imageStyle?: StyleProp<ImageStyle>;
     lineupItemsData: lineupType[];
     favouritesStack?: boolean;
+    onItemPress: (lineupID: string) => void;
 };
 
 const SitePicker = ({
@@ -38,6 +39,7 @@ const SitePicker = ({
     imageStyle,
     lineupItemsData,
     favouritesStack,
+    onItemPress,
 }: SitePickerProps) => {
     const [isDropped, setIsDropped] = React.useState<Boolean>(false);
     const animationController = React.useRef(new Animated.Value(0)).current;
@@ -111,6 +113,7 @@ const SitePicker = ({
                             favouritesStack={favouritesStack}
                             key={item.data.lineupID}
                             lineup={item}
+                            onPress={onItemPress}
                         />
                     ))}
                 </View>

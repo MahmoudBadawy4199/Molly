@@ -19,8 +19,9 @@ import BackgroundGradient from '../components/background-gradient';
 import Agent from '../components/agent';
 // Types
 import { AgentType, AgentScreenNavigationProp } from '../types';
-// Data
-import data from '../../data.json';
+// Redux
+import { useAppSelector } from '../redux/hooks';
+import { selectAgents } from '../redux/contentSlice';
 
 const AgentSelect = () => {
     // Navigation
@@ -29,10 +30,10 @@ const AgentSelect = () => {
         navigation.navigate('MapSelect', { agentID });
     }
 
-    // Data
-    const { agents } = data;
+    // Agents Data
+    const agents = useAppSelector(selectAgents);
 
-    // Agent Item
+    // Render Agents
     const renderAgentItem: ListRenderItem<AgentType> = ({
         item,
     }: ListRenderItemInfo<AgentType>) => (

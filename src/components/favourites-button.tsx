@@ -18,10 +18,9 @@ import { Ionicons } from '@expo/vector-icons';
 type FavouritesButtonProps = {
     style: StyleProp<ViewStyle> | undefined;
     active: boolean;
+    onPress: () => void;
 };
-const FavouritesButton = ({ style, active }: FavouritesButtonProps) => {
-    const [isFavourite, setIsFavourite] = React.useState<Boolean>(active);
-
+const FavouritesButton = ({ style, active, onPress }: FavouritesButtonProps) => {
     const toggleFavourite = () => {
         const layoutAnimationConfig = {
             duration: 300,
@@ -37,19 +36,19 @@ const FavouritesButton = ({ style, active }: FavouritesButtonProps) => {
         // animate the Layout Change When the DropDown Appears or Hide
         LayoutAnimation.configureNext(layoutAnimationConfig);
         // Change the State for On / Off
-        setIsFavourite(!isFavourite);
+        onPress();
     };
     return (
         <TouchableWithoutFeedback onPress={() => toggleFavourite()}>
             <View
                 style={[
                     styles.containerStyle,
-                    isFavourite ? styles.containerStyle_active : styles.containerStyle,
+                    active ? styles.containerStyle_active : styles.containerStyle,
                     style,
                 ]}
             >
                 {/* Button Text */}
-                {isFavourite ? null : (
+                {active ? null : (
                     <Text adjustsFontSizeToFit numberOfLines={1} style={styles.textStyle}>
                         Add To Favourites
                     </Text>
@@ -58,7 +57,7 @@ const FavouritesButton = ({ style, active }: FavouritesButtonProps) => {
                 <View
                     style={[
                         styles.iconStyleContainer,
-                        styles[isFavourite ? 'iconStyleContainer_active' : 'iconStyleContainer'],
+                        styles[active ? 'iconStyleContainer_active' : 'iconStyleContainer'],
                     ]}
                 >
                     <Ionicons name="heart" size={moderateScale(24)} color={Colors.white} />

@@ -14,20 +14,26 @@ import { horizontalScale, verticalScale } from '../utils/Scale';
 // Types
 import { HomeStackParamList, MapItemType, MapSelectScreenNavigationProp } from '../types';
 
-import data from '../../data.json';
+// Redux
+import { useAppSelector } from '../redux/hooks';
+import { selectAgents, selectMaps } from '../redux/contentSlice';
 
 const MapSelect = () => {
     // Navigation & Params
     const route = useRoute<RouteProp<HomeStackParamList, 'MapSelect'>>();
-    const { agentID } = route.params;
     const navigation = useNavigation<MapSelectScreenNavigationProp>();
-    function navigationHandler(mapItem: MapItemType) {
-        navigation.navigate('LineupSelect', { agentID, mapItem });
+
+    const { agentID } = route.params;
+    function navigationHandler(mapID: number) {
+        navigation.navigate('LineupSelect', { agentID, mapID });
     }
+
     // Data Manipulation
-    const modelImage = data.agents[agentID].modelImage;
-    const allMapsThatAgentHasLineups = data.agents[agentID].lineups.map((item) => {
-        return data.maps[item];
+    const agent = useAppSelector(selectAgents).filter((item) => item.id === agentID)[0];
+    const allMaps = useAppSelector(selectMaps);
+
+    const allMapsThatAgentHasLineups = agent.lineups.map((item) => {
+        return allMaps.filter((map) => map.id === item)[0];
     });
 
     // Render Map items
@@ -37,7 +43,7 @@ const MapSelect = () => {
         <MapItem
             style={styles.mapItemStyle}
             mapData={item}
-            onPress={() => navigationHandler(item)}
+            onPress={() => navigationHandler(item.id)}
         />
     );
 
@@ -48,7 +54,7 @@ const MapSelect = () => {
                 <Banner
                     screenTitle="select map"
                     defaultBackgroundImage="Select Map"
-                    modelImage={modelImage}
+                    modelImage={agent.modelImage}
                 />
                 {/* Background Gradient */}
                 <BackgroundGradient style={styles.backgroundGradientStyle} />
