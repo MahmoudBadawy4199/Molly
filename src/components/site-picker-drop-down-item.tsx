@@ -8,6 +8,9 @@ import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 // Types
 import { lineupType } from '../types';
+// Redux
+import { useAppSelector } from '../redux/hooks';
+import { selectMaps } from '../redux/contentSlice';
 
 type SitePickerDropDownItemProps = {
     lineup: lineupType;
@@ -21,8 +24,9 @@ const SitePickerDropDownItem = ({
     onPress,
 }: SitePickerDropDownItemProps) => {
     // Navigation
-
-    const mapImage = data.maps[lineup.data.mapID].splashImage;
+    const mapImage = useAppSelector(selectMaps).filter(
+        (item: { id: number }) => item.id === lineup.data.mapID,
+    )[0].splashImage;
 
     return (
         <TouchableOpacity activeOpacity={1} onPress={() => onPress(lineup.data.lineupID)}>
