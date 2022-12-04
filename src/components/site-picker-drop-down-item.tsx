@@ -9,8 +9,6 @@ import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 // Types
 import { lineupType } from '../types';
 
-import data from '../../data.json';
-
 type SitePickerDropDownItemProps = {
     lineup: lineupType;
     favouritesStack?: boolean;
