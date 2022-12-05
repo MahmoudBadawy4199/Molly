@@ -3,8 +3,10 @@
 Molly is a Fan Made Mobile Application to provide Lineups for Agents in Valorant Video Game.
 ## Current Status
 
-- ~95% Of The App is Done, The First Version Will Be Available Soon.  
-- Working On The Last Parts Of The Backend.
+- ~98% Of The App is Done, The First Version Will Be Available Soon.  
+- Finished The UI.
+- Finished The Backend.
+- Currently Working On Creating The Content.
 ## The Design
 - Check on [Figma](https://www.figma.com/file/UJW0fF5TQ4EoOTrFP11zLH/Molly?node-id=343%3A1529)
 
