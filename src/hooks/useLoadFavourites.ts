@@ -6,7 +6,7 @@ import { selectLineups, updateLineups } from '../redux/contentSlice';
 import { selectFavourites } from '../redux/favouritesSlice';
 
 export default function useLoadFavourites() {
-    const [isFavouritesLoaded, setFavouritesLoaded] = useState<Boolean>(false);
+    const [isFavouritesLoaded, setFavouritesLoaded] = useState<boolean>(false);
     const dispatch = useAppDispatch();
     const allLineups = useAppSelector(selectLineups);
     const favouriteLineupsIDs = useAppSelector(selectFavourites);
