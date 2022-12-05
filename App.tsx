@@ -2,7 +2,7 @@
 import { I18nManager, StatusBar, StyleSheet } from 'react-native';
 // Libraries
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 // Components
@@ -50,7 +50,7 @@ export default () => {
         <ReduxProvider store={store}>
             <PersistGate loading={null} persistor={persistor}>
                 <SafeAreaProvider>
-                    <NavigationContainer>
+                    <NavigationContainer theme={DarkTheme}>
                         <App />
                     </NavigationContainer>
                 </SafeAreaProvider>
