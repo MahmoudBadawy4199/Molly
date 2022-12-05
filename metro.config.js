@@ -4,6 +4,7 @@ module.exports = (() => {
     const config = getDefaultConfig(__dirname);
 
     const { transformer, resolver } = config;
+    config.resolver.assetExts.push('cjs');
 
     config.transformer = {
         ...transformer,
