@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../redux/hooks';
 import { fillContent } from '../redux/contentSlice';
 // Firebase
-import { ref, onValue } from 'firebase/database';
+import { ref, onValue, goOffline } from 'firebase/database';
 import { database } from '../../firebase';
 // Types
 import { ContentType } from '../types';
@@ -23,6 +23,7 @@ export default function useLoadContent() {
                         const contentFromFirebase: ContentType = snapshot.val();
                         dispatch(fillContent(contentFromFirebase));
                         setContentLoaded(true);
+                        goOffline(database);
                     },
                     {
                         onlyOnce: true,
