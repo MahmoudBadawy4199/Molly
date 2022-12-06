@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, FlatList, View, Dimensions, ViewToken } from 'react-native';
 // Components
-import ImageWithIndicator from './ImageWithIndicator';
+import CustomCachedImage from './custom-cached-image';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
@@ -35,7 +35,7 @@ const Slider = ({ screenshots }: SliderProps) => {
     });
     // Flatlist Render Item
     const renderItem = ({ item }: renderItemProps) => {
-        return <ImageWithIndicator source={{ uri: item }} style={styles.imageStyle} />;
+        return <CustomCachedImage source={{ uri: item }} style={styles.imageStyle} />;
     };
 
     // generate the Dots

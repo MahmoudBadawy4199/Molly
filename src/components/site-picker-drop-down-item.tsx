@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 // Components
-import ImageWithIndicator from './ImageWithIndicator';
+import CustomCachedImage from './custom-cached-image';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
@@ -39,7 +39,7 @@ const SitePickerDropDownItem = ({
                     {/* Map Slash Image */}
                     {favouritesStack ? (
                         <>
-                            <ImageWithIndicator
+                            <CustomCachedImage
                                 source={{ uri: mapImage }}
                                 style={styles.backgroundMapImageStyle}
                             />
@@ -74,7 +74,7 @@ const SitePickerDropDownItem = ({
 
                     {/* Ability Image */}
                     <View style={styles.abilityImageContainerStyle}>
-                        <ImageWithIndicator
+                        <CustomCachedImage
                             source={{ uri: lineup.data.lineupAbilityImage }}
                             style={styles.abilityImageStyle}
                         />
@@ -89,7 +89,7 @@ const SitePickerDropDownItem = ({
                             : styles.minimapImageContainerStyle,
                     ]}
                 >
-                    <ImageWithIndicator
+                    <CustomCachedImage
                         source={{ uri: lineup.data.lineupMinimap }}
                         style={styles.minimapImageStyle}
                     />

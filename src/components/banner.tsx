@@ -1,15 +1,8 @@
 // React
 import React from 'react';
-import {
-    ImageBackground,
-    StyleSheet,
-    Text,
-    ActivityIndicator,
-    View,
-    Image,
-    StyleProp,
-    ImageStyle,
-} from 'react-native';
+import { StyleSheet, Text, View, StyleProp, ImageStyle } from 'react-native';
+// Components
+import CustomCachedImage from './custom-cached-image';
 // Utils
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 import Colors from '../utils/Colors';
@@ -34,12 +27,6 @@ type BannerProps = {
 };
 
 const Banner: React.FC<BannerProps> = (props) => {
-    // Loading Indicator State
-    const [isImageLoading, setIsImageLoading] = React.useState<boolean>(true);
-    function handleImageLoading(flag: boolean) {
-        setIsImageLoading(flag);
-    }
-
     const defaultBackgroundImage = (): number => {
         return props.defaultBackgroundImage === 'Favourites'
             ? images.favouritesBannerImage
@@ -77,25 +64,16 @@ const Banner: React.FC<BannerProps> = (props) => {
                 },
             ]}
         >
-            {/* Loading Indicator  */}
-            {isImageLoading ? (
-                <ActivityIndicator
-                    style={styles.activityIndicatorStyle}
-                    size={'small'}
-                    color={Colors.white}
-                />
-            ) : null}
             {/* Background Image */}
-            <ImageBackground
+            <CustomCachedImage
+                isBackground
                 source={
                     props.backgroundImageUri
                         ? { uri: props.backgroundImageUri }
                         : defaultBackgroundImage()
                 }
-                imageStyle={[styles.backgroundImageStyle, props.backgroundImageStyle]}
+                backgroundImageStyle={[styles.backgroundImageStyle, props.backgroundImageStyle]}
                 blurRadius={props.backgroundImageBlurRadius}
-                onLoadStart={() => handleImageLoading(true)}
-                onLoadEnd={() => handleImageLoading(false)}
             >
                 {/* Shape overlay  */}
                 <View style={styles.shapeContainer}>{overlay()}</View>
@@ -103,7 +81,10 @@ const Banner: React.FC<BannerProps> = (props) => {
                 {/* Model Image */}
                 {props.modelImage ? (
                     <View style={styles.modelContainerStyle}>
-                        <Image source={{ uri: props.modelImage }} style={styles.modelImageStyle} />
+                        <CustomCachedImage
+                            source={{ uri: props.modelImage }}
+                            style={styles.modelImageStyle}
+                        />
                     </View>
                 ) : null}
 
@@ -141,7 +122,7 @@ const Banner: React.FC<BannerProps> = (props) => {
 
                             {/* Ability Image */}
                             <View style={styles.abilityImageContainerStyle}>
-                                <Image
+                                <CustomCachedImage
                                     source={{ uri: props.lineupDetails.lineupAbilityImage }}
                                     style={styles.abilityImageStyle}
                                 />
@@ -153,7 +134,7 @@ const Banner: React.FC<BannerProps> = (props) => {
                 <View style={styles.bottomHighlightLineContainerStyle}>
                     <View style={styles.bottomHighlightLineStyle} />
                 </View>
-            </ImageBackground>
+            </CustomCachedImage>
         </View>
     );
 };

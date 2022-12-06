@@ -2,7 +2,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 // Components
-import ImageWithIndicator from '../components/ImageWithIndicator';
+import CustomCachedImage from './custom-cached-image';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
@@ -19,7 +19,7 @@ const InfoCard = ({ image, message }: InfoCardProps) => {
                 {/* Black overlay */}
                 <View style={styles.blackoverlay} />
                 {/* Image */}
-                <ImageWithIndicator style={styles.imageStyle} source={image} />
+                <CustomCachedImage style={styles.imageStyle} source={image} />
                 {/* Message */}
                 <Text adjustsFontSizeToFit numberOfLines={1} style={styles.messageStyle}>
                     {message}

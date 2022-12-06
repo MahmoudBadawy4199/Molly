@@ -3,7 +3,6 @@ import React from 'react';
 import {
     StyleSheet,
     Text,
-    Image,
     View,
     TouchableWithoutFeedback,
     StyleProp,
@@ -16,6 +15,7 @@ import Colors from '../utils/Colors';
 import { DiamondOverlay } from '../assets/svg';
 // Types
 import { MapItemType } from '../types';
+import CustomCachedImage from './custom-cached-image';
 
 type MapItemProps = {
     mapData: MapItemType;
@@ -27,7 +27,10 @@ const MapItem = ({ mapData, style, onPress }: MapItemProps) => {
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={[styles.containerStyle, style]}>
                 {/* Map Background Image */}
-                <Image source={{ uri: mapData.splashImage }} style={styles.mapImageStyle} />
+                <CustomCachedImage
+                    source={{ uri: mapData.splashImage }}
+                    style={styles.mapImageStyle}
+                />
                 {/* Darker Overlay To Control Map Brightness */}
                 <View style={styles.darkerOverlayOnMapStyle} />
                 {/* White Diamond Overlay Behind Map Title */}

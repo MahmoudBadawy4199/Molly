@@ -1,9 +1,9 @@
 // React
 import React from 'react';
-import { StyleSheet, View, Image, Platform } from 'react-native';
+import { StyleSheet, View, Platform } from 'react-native';
 // Components
 import BackgroundGradient from './background-gradient';
-import ImageWithIndicator from './ImageWithIndicator';
+import CustomCachedImage from './custom-cached-image';
 // Utils
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 // Types
@@ -28,13 +28,13 @@ const Agent = ({ data }: AgentProps) => {
             <View style={styles.blackOverlay} />
 
             {/* Role */}
-            <Image style={styles.roleStyle} source={{ uri: data.roleImage }} />
+            <CustomCachedImage style={styles.roleStyle} source={{ uri: data.roleImage }} />
 
             {/* Name */}
-            <Image style={styles.nameStyle} source={{ uri: data.nameImage }} />
+            <CustomCachedImage style={styles.nameStyle} source={{ uri: data.nameImage }} />
 
             {/* Model */}
-            <ImageWithIndicator style={styles.modelStyle} source={{ uri: data.modelImage }} />
+            <CustomCachedImage style={styles.modelStyle} source={{ uri: data.modelImage }} />
 
             {/* Shadow Under Component Workaround For Android */}
             {Platform.OS === 'android' ? (

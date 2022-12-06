@@ -68,7 +68,7 @@ const LineupSelect = () => {
                 {/* Banner */}
                 <Banner
                     screenTitle="select Lineup"
-                    screenSubtitle={`${agent.name} >> ${map.mapName}`}
+                    screenSubtitle={`${agent.name} \\\\ ${map.mapName}`}
                     backgroundImageUri={map.splashImage}
                 />
 

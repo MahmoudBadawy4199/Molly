@@ -14,7 +14,7 @@ import {
 // Components
 import BackgroundGradient from './background-gradient';
 import SitePickerDropDownItem from './site-picker-drop-down-item';
-import ImageWithIndicator from './ImageWithIndicator';
+import CustomCachedImage from './custom-cached-image';
 // Utils
 import Colors from '../utils/Colors';
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
@@ -88,7 +88,7 @@ const SitePicker = ({
                     </View>
                     {/* Image */}
                     <View style={styles.imageContainerStyle}>
-                        <ImageWithIndicator
+                        <CustomCachedImage
                             source={{ uri: image }}
                             style={[styles.imageStyle, imageStyle]}
                         />
