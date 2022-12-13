@@ -81,8 +81,8 @@ export default Slider;
 const styles = StyleSheet.create({
     imageStyle: {
         width,
-        height: verticalScale(150),
-        resizeMode: 'cover',
+        height: verticalScale(160),
+        resizeMode: 'stretch',
     },
     dotsContainerStyle: {
         flexDirection: 'row',
