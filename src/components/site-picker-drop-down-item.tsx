@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
     },
     subLabelStyle: {
         color: Colors.white,
-        fontSize: moderateScale(18),
+        fontSize: moderateScale(16),
         fontFamily: 'Tungsten',
         textTransform: 'capitalize',
         letterSpacing: 1,
