@@ -24,6 +24,7 @@ const TabNavigator = () => {
     return (
         <BottomTabNavigator.Navigator
             initialRouteName="Home"
+            backBehavior="none"
             screenOptions={({ route }) => ({
                 headerShown: false,
                 // Tab Bar Styling
