@@ -95,12 +95,13 @@ const styles = StyleSheet.create({
     },
     nameStyle: {
         flex: 0.4,
-        height: undefined,
+        height: '30%',
         width: undefined,
-        resizeMode: 'contain',
+        resizeMode: 'stretch',
+        alignSelf: 'center',
         shadowOffset: {
             width: 0,
-            height: verticalScale(1),
+            height: verticalScale(2),
         },
         shadowOpacity: 1,
         shadowRadius: 0,
