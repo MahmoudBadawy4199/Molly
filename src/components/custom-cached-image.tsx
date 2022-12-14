@@ -42,7 +42,7 @@ const CustomCachedImage = (props: propType) => {
     // Download The Image From A Link
     const fetchFromURI = async (uri: string) => {
         const name = shortHash(uri);
-        const path = `${FileSystem.cacheDirectory}${name}`;
+        const path = `${FileSystem.documentDirectory}${name}`;
         const image = await FileSystem.getInfoAsync(path);
         if (image.exists) {
             return image.uri;
