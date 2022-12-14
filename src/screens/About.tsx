@@ -1,14 +1,20 @@
 // React
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Linking, TouchableOpacity } from 'react-native';
+
 // Components
 import Container from '../components/container-with-background-overlay';
 import BackgroundGradient from '../components/background-gradient';
 // Utils
 import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 import Colors from '../utils/Colors';
+// Assets
+import { DiscordIcon } from '../assets/svg';
 
 const About = () => {
+    const openDiscord = () => {
+        Linking.openURL('https://discord.gg/e3U46HSFNk');
+    };
     return (
         <>
             <Container>
@@ -35,6 +41,22 @@ const About = () => {
                             project.
                         </Text>
                     </View>
+                    <View style={styles.textContainerStyle}>
+                        {/* Dot */}
+                        <Text style={styles.dotStyle}>{'\u2022'}</Text>
+                        {/* Text */}
+                        <Text style={styles.textStyle}>Have issues or suggestions? DM me.</Text>
+                    </View>
+                    <TouchableOpacity
+                        activeOpacity={1}
+                        style={styles.discordButtonStyle}
+                        onPress={openDiscord}
+                    >
+                        <View style={styles.discordButtonContentContainerStyle}>
+                            <DiscordIcon width={horizontalScale(40)} height={verticalScale(40)} />
+                            <Text style={styles.discordTextStyle}>Join the discord</Text>
+                        </View>
+                    </TouchableOpacity>
                 </View>
             </Container>
         </>
@@ -83,5 +105,25 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(24),
         fontFamily: 'Tungsten',
         paddingRight: horizontalScale(15),
+    },
+    discordButtonStyle: {
+        height: verticalScale(60),
+        width: '90%',
+        alignSelf: 'center',
+        borderRadius: moderateScale(15),
+        backgroundColor: '#3858A3',
+    },
+    discordButtonContentContainerStyle: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    discordTextStyle: {
+        color: Colors.white,
+        marginLeft: horizontalScale(15),
+        fontSize: moderateScale(22),
+        letterSpacing: 0.6,
+        fontFamily: 'Tungsten',
     },
 });
