@@ -20,6 +20,7 @@ import { store, persistor } from './src/redux/store';
 // Disable RTL
 I18nManager.forceRTL(false);
 I18nManager.allowRTL(false);
+I18nManager.swapLeftAndRightInRTL(false);
 // View Splash Screen Until Data Is Loaded
 SplashScreen.preventAutoHideAsync();
 

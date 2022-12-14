@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     lineupDetailsContainerStyle: {
         flex: 1,
         padding: moderateScale(10),
+        alignSelf: 'flex-start',
         justifyContent: 'center',
     },
     subLabelStyle: {
@@ -142,6 +143,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(16),
         fontFamily: 'Tungsten',
         textTransform: 'capitalize',
+        alignSelf: 'flex-start',
         letterSpacing: 1,
         textShadowOffset: { width: 0, height: verticalScale(2) },
         textShadowRadius: moderateScale(1),
@@ -152,6 +154,7 @@ const styles = StyleSheet.create({
         color: Colors.white,
         fontSize: moderateScale(24),
         textDecorationLine: 'underline',
+        alignSelf: 'flex-start',
         fontFamily: 'Tungsten',
         textTransform: 'uppercase',
         letterSpacing: 1,

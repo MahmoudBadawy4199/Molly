@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
         fontSize: moderateScale(18),
         fontFamily: 'Tungsten',
         textTransform: 'uppercase',
+        alignSelf: 'flex-start',
         letterSpacing: 1,
         textShadowOffset: { width: 0, height: verticalScale(2) },
         textShadowRadius: moderateScale(1),
