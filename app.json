@@ -19,6 +19,8 @@
             "supportsTablet": true
         },
         "android": {
+            "package": "com.mahmoudbadawy.molly",
+            "versionCode": 1,
             "adaptiveIcon": {
                 "foregroundImage": "./src/assets/images/expo/adaptive-icon.png",
                 "backgroundColor": "#0F1923"
