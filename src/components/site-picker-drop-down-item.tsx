@@ -137,6 +137,7 @@ const styles = StyleSheet.create({
         padding: moderateScale(10),
         alignSelf: 'flex-start',
         justifyContent: 'center',
+        height: '100%',
     },
     subLabelStyle: {
         color: Colors.white,

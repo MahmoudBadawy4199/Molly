@@ -57,6 +57,7 @@ const Slider = ({ screenshots }: SliderProps) => {
             <FlatList
                 data={screenshots}
                 renderItem={renderItem}
+                initialNumToRender={1}
                 keyExtractor={(_, index) => index.toString()}
                 horizontal
                 showsHorizontalScrollIndicator={false}
