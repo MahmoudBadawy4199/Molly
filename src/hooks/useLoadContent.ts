@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 // Redux
 import { useAppDispatch } from '../redux/hooks';
 import { fillContent } from '../redux/contentSlice';
+import { clearError, setError } from '../redux/errorsSlice';
 // Firebase
 import { ref, onValue, goOffline } from 'firebase/database';
 import { database } from '../../firebase';
@@ -20,17 +21,24 @@ export default function useLoadContent() {
                 onValue(
                     dbRef,
                     (snapshot) => {
-                        const contentFromFirebase: ContentType = snapshot.val();
-                        dispatch(fillContent(contentFromFirebase));
-                        setContentLoaded(true);
-                        goOffline(database);
+                        if (snapshot.exists()) {
+                            const contentFromFirebase: ContentType = snapshot.val();
+                            dispatch(fillContent(contentFromFirebase));
+                            dispatch(clearError());
+                            setContentLoaded(true);
+                            goOffline(database);
+                        } else {
+                            dispatch(setError('Service is unavailable, Try Again Later'));
+                            setContentLoaded(true);
+                        }
                     },
                     {
                         onlyOnce: true,
                     },
                 );
             } catch (e) {
-                console.warn(e);
+                dispatch(setError('Service Currently Unavailable,Try Again Later'));
+                setContentLoaded(true);
             }
         }
         loadDataFromFirebaseAsync();

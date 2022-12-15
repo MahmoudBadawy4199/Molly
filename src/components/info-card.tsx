@@ -10,16 +10,20 @@ import { horizontalScale, moderateScale, verticalScale } from '../utils/Scale';
 type InfoCardProps = {
     image: number;
     message: string;
+    iconResizeMode?: 'contain';
 };
 
-const InfoCard = ({ image, message }: InfoCardProps) => {
+const InfoCard = ({ image, message, iconResizeMode }: InfoCardProps) => {
     return (
         <View style={styles.container}>
             <View style={styles.messageContainer}>
                 {/* Black overlay */}
                 <View style={styles.blackoverlay} />
                 {/* Image */}
-                <CustomCachedImage style={styles.imageStyle} source={image} />
+                <CustomCachedImage
+                    style={[styles.imageStyle, { resizeMode: iconResizeMode }]}
+                    source={image}
+                />
                 {/* Message */}
                 <Text adjustsFontSizeToFit numberOfLines={1} style={styles.messageStyle}>
                     {message}

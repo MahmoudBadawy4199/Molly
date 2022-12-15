@@ -19,6 +19,7 @@ import images from '../assets/images';
 // Redux
 import { useAppSelector } from '../redux/hooks';
 import { selectAgents, selectLineups } from '../redux/contentSlice';
+import { selectError } from '../redux/errorsSlice';
 
 const Favourites = () => {
     // Navigation
@@ -26,6 +27,7 @@ const Favourites = () => {
     function navigationHandler(lineupID: string) {
         navigation.navigate('LineupDetails', { lineupID });
     }
+    const error = useAppSelector(selectError);
 
     // Data Manipulation For UI
     const favouriteLineups = useAppSelector(selectLineups).filter((lineup) => lineup.isFavourite);
@@ -66,21 +68,32 @@ const Favourites = () => {
                 {/* Background Gradient */}
                 <BackgroundGradient style={styles.backgroundGradientStyle} />
 
-                {/* Render Agents */}
-                {favouriteLineups.length ? (
-                    <FlatList
-                        data={agentsData}
-                        renderItem={renderSitePickerItem}
-                        style={styles.flatListStyle}
-                        contentContainerStyle={styles.flatListContentContainerStyle}
-                        showsVerticalScrollIndicator={false}
+                {error ? (
+                    // Server Error Information Card
+                    <InfoCard
+                        message={error}
+                        image={images.errorImage}
+                        iconResizeMode={'contain'}
                     />
                 ) : (
-                    // Empty Favourites Information Card
-                    <InfoCard
-                        message="you dont have favourite lineups"
-                        image={images.emptyFavouritesImage}
-                    />
+                    <>
+                        {/* Render Agents */}
+                        {favouriteLineups.length ? (
+                            <FlatList
+                                data={agentsData}
+                                renderItem={renderSitePickerItem}
+                                style={styles.flatListStyle}
+                                contentContainerStyle={styles.flatListContentContainerStyle}
+                                showsVerticalScrollIndicator={false}
+                            />
+                        ) : (
+                            // Empty Favourites Information Card
+                            <InfoCard
+                                message="you dont have favourite lineups"
+                                image={images.emptyFavouritesImage}
+                            />
+                        )}
+                    </>
                 )}
             </Container>
         </>

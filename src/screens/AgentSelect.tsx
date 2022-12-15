@@ -17,11 +17,15 @@ import Container from '../components/container-with-background-overlay';
 import Banner from '../components/banner';
 import BackgroundGradient from '../components/background-gradient';
 import Agent from '../components/agent';
+import InfoCard from '../components/info-card';
 // Types
 import { AgentType, AgentScreenNavigationProp } from '../types';
 // Redux
 import { useAppSelector } from '../redux/hooks';
 import { selectAgents } from '../redux/contentSlice';
+import { selectError } from '../redux/errorsSlice';
+// Assets
+import images from '../assets/images';
 
 const AgentSelect = () => {
     // Navigation
@@ -29,7 +33,7 @@ const AgentSelect = () => {
     function navigationHandler(agentID: number) {
         navigation.navigate('MapSelect', { agentID });
     }
-
+    const error = useAppSelector(selectError);
     // Agents Data
     const agents = useAppSelector(selectAgents);
 
@@ -52,15 +56,23 @@ const AgentSelect = () => {
                 />
                 {/* Background Gradient */}
                 <BackgroundGradient style={styles.backgroundGradientStyle} />
-                {/* Agents */}
-                <FlatList
-                    style={styles.flatListStyle}
-                    data={agents}
-                    keyExtractor={(item) => item.id.toString()}
-                    showsVerticalScrollIndicator={false}
-                    contentContainerStyle={styles.flatListContentContainerStyle}
-                    renderItem={renderAgentItem}
-                />
+                {error ? (
+                    // Server Error Information Card
+                    <InfoCard
+                        message={error}
+                        image={images.errorImage}
+                        iconResizeMode={'contain'}
+                    />
+                ) : (
+                    <FlatList
+                        style={styles.flatListStyle}
+                        data={agents}
+                        keyExtractor={(item) => item.id.toString()}
+                        showsVerticalScrollIndicator={false}
+                        contentContainerStyle={styles.flatListContentContainerStyle}
+                        renderItem={renderAgentItem}
+                    />
+                )}
             </Container>
         </>
     );

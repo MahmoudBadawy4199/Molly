@@ -1,6 +1,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import favouritesReducer from './favouritesSlice';
 import contentReducer from './contentSlice';
+import errorReducer from './errorsSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     persistStore,
@@ -16,6 +17,7 @@ import {
 const rootReducer = combineReducers({
     content: contentReducer,
     favourites: favouritesReducer,
+    error: errorReducer,
 });
 
 const persistConfig = {

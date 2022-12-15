@@ -16,6 +16,8 @@ import useLoadFavourites from './src/hooks/useLoadFavourites';
 import { Provider as ReduxProvider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './src/redux/store';
+import { useAppSelector } from './src/redux/hooks';
+import { selectError } from './src/redux/errorsSlice';
 
 // Disable RTL
 I18nManager.forceRTL(false);
@@ -27,6 +29,7 @@ SplashScreen.preventAutoHideAsync();
 function App() {
     const isContentLoaded = useLoadContent();
     const isFavouritesLoaded = useLoadFavourites();
+    const error = useAppSelector(selectError);
     // Load Fonts
     const [loaded] = useFonts({
         Tungsten: Tungsten,
@@ -34,6 +37,9 @@ function App() {
 
     if (!loaded) {
         return null;
+    }
+    if (error) {
+        SplashScreen.hideAsync();
     }
     if (isContentLoaded && isFavouritesLoaded && loaded) {
         // Hide Splash Screen When Data Is Loaded
