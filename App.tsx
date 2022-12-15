@@ -5,6 +5,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+import RNRestart from 'react-native-restart';
 // Components
 import TabNavigator from './src/navigation/TabNavigator';
 // assets
@@ -20,9 +21,12 @@ import { useAppSelector } from './src/redux/hooks';
 import { selectError } from './src/redux/errorsSlice';
 
 // Disable RTL
-I18nManager.forceRTL(false);
-I18nManager.allowRTL(false);
-I18nManager.swapLeftAndRightInRTL(false);
+if (I18nManager.isRTL) {
+    I18nManager.forceRTL(false);
+    I18nManager.allowRTL(false);
+    I18nManager.swapLeftAndRightInRTL(false);
+    RNRestart.Restart();
+}
 // View Splash Screen Until Data Is Loaded
 SplashScreen.preventAutoHideAsync();
 

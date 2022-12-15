@@ -4,7 +4,7 @@
         "slug": "Molly",
         "version": "1.0.0",
         "orientation": "portrait",
-        "icon": "./src/assets/images/expo/adaptive-icon.png",
+        "icon": "./src/assets/images/expo/icon.png",
         "userInterfaceStyle": "dark",
         "splash": {
             "image": "./src/assets/images/expo/splash.png",
@@ -28,6 +28,11 @@
         },
         "web": {
             "favicon": "./src/assets/images/expo/adaptive-icon.png"
+        },
+        "extra": {
+            "eas": {
+                "projectId": "3dee3822-5606-4830-9455-ae7da9fad245"
+            }
         }
     }
 }
